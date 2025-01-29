@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Страна Знаний</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header__nav">
+                <div class="header__logo"></div>
+                <span class="header__nav_link open_link" onclick="showAllContractsPage()">Все договоры</span>
+                <span class="header__nav_link" onclick="showNewContractsPage()">Создать договор</span>
+            </div>
+            <div class="header__nav_link account_btn" ontouchstart>
+                <span>Аккаунт</span>
+                <div class="block block_account">
+                    <p class="user-mail__title">Вы вошли как:</p>
+                    <p class="user-mail">email@gmail.com</p>
+                    <button class="primary-btn btn_open-users-page">Управление аккаунтами</button>
+                    <div class="exit-wrapper" onclick="window.location.href='./index.html' ">
+                        <button class="exit-btn">Выход</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </header>
+    <main class="main">
+        <div class="container">
+            <div class="all-contracts-page">
+                <p class="page__title">Все договоры</p>
+                <div class="block block_contracts">
+                    <div class="search-container">
+                        <div class="input-wrapper">
+                            <input class="search-input" type="text" id="searchInput"
+                                placeholder="Поиск договора или проекта">
+                            <button class="clear-btn" id="clearBtn" type="button" aria-label="Clear search">×</button>
+                        </div>
+                        <button id="searchBtn" class="primary-btn">Найти</button>
+                    </div>
+                    <div class="line-decor"></div>
+                    <div class="table-wrapper">
+                        <table class="project-table" id="projectTable">
+                            <thead class="project-table__header">
+                                <tr>
+                                    <th>Договор</th>
+                                    <th>Дата создания</th>
+                                    <th>Кол-во фото</th>
+                                    <th>QR-код</th>
+                                </tr>
+                            </thead>
+                            <tbody class="project-table-body" id="projectTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
+                </div>
+                <div class="pagination" id="pagination">
+                </div>
+            </div>
+            <div class="new-contracts-page" style="display: none;">
+                <p class="page__title">Создание нового договора</p>
+                <div class="block block_contracts block_white">
+                    <div class="new-contracts__header">
+                        <div class="new-contracts__inputs-wrapper">
+                            <input class="new-contracts__input" type="text" placeholder="Номер договора или проекта">
+                            <button class="primary-btn">Сохранить</button>
+                            <button class="primary-btn">Сохранить QR-код</button>
+                        </div>
+                        <div class="new-contracts__count-files">
+                            Загружено: 2 фото
+                        </div>
+                    </div>
+                    <div class="new-contracts__files-load">
+                        <div class="files-load__header">
+                            <button class="primary-btn">Пакетная загрузка</button>
+                            <button class="primary-btn">Добавить фото</button>
+                        </div>
+                        <table class="new-contracts-table">
+                            <thead class="new-contracts-table__header">
+                                <tr>
+                                    <th>Фото</th>
+                                    <th>Видео</th>
+
+                                </tr>
+                            </thead>
+                            <tbody class="new-contracts-table-body">
+                                <tr>
+                                    <td>
+                                        <div class="files-item">
+                                            <span class="files-item__name">Иванов Иван.mp4</span>
+                                            <div class="files-item__btns">
+                                                <div class="btn-load"></div>
+                                                <div class="btn-delete"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td class="new-contracts-table__td-end">
+                                        <div class="files-item">
+                                            <span class="files-item__name">Иванов Иван.mp4</span>
+                                            <div class="files-item__btns">
+                                                <div class="btn-load"></div>
+                                                <div class="btn-delete"></div>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                    <td class="td_btn">
+                                        <div class="btn-delete"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="files-item">
+                                            <span class="files-item__name">Иванов Иван.mp4</span>
+                                            <div class="files-item__btns">
+                                                <div class="btn-load"></div>
+                                                <div class="btn-delete"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="new-contracts-table__td-end">
+                                        <div class="files-item">
+                                            <span class="files-item__name">Иванов Иван.mp4</span>
+                                            <div class="files-item__btns">
+                                                <div class="btn-load"></div>
+                                                <div class="btn-delete"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="td_btn">
+                                        <div class="btn-delete"></div>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="all-users-page" style="display: none;">
+                <p class="page__title">Пользователи</p>
+                <div class="block block_contracts">
+                    <button class="primary-btn btn-add-user">Создать аккаунт</button>
+                    <div class="table-wrapper">
+                        <table class="user-table" id="userTable">
+                            <thead class="user-table__header">
+                                <tr>
+                                    <th>Имя</th>
+                                    <th>Email</th>
+                                    <th>Роль</th>
+                                </tr>
+                            </thead>
+                            <tbody class="user-table-body" id="userTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
+                </div>
+                <div class="pagination" id="paginationUser">
+                </div>
+            </div>
+        </div>
+        <div class="popup popup_delete" style="display: none;">
+            <div class="block block_popup">
+                <div class="popup__text">
+                    Вы уверены, что хотите удалить пользователя <span id="nameRole"></span>?
+                </div>
+                <div class="line-decor"></div>
+                <div class="popup__btn-group">
+                    <button class="primary-btn" id="btn-delete-user">Да</button>
+                    <button class="primary-btn" onclick="hidePopupDelete()">Отменить</button>
+                </div>
+                <div class="btn-delete" onclick="hidePopupDelete()"></div>
+            </div>
+        </div>
+        <div class="popup popup_edit" style="display: none;">
+            <div class="block block_popup">
+                <div class="popup__title">изменение пользователя</div>
+                <form id="editForm" class="edit-form">
+                    <label class="label-input" for="name">
+                        <p class="label-input__title">Имя</p>
+                        <input type="text" id="name" name="name" required>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <mask id="mask0_82_1006" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
+                                width="24" height="24">
+                                <rect width="24" height="24" fill="#D9D9D9" />
+                            </mask>
+                            <g mask="url(#mask0_82_1006)">
+                                <path
+                                    d="M5 19H6.098L16.7962 8.302L15.698 7.20375L5 17.902V19ZM4 20V17.4808L17.1807 4.2865C17.2832 4.19517 17.3963 4.12458 17.52 4.07475C17.6438 4.02492 17.7729 4 17.9072 4C18.0416 4 18.1717 4.02117 18.2977 4.0635C18.4236 4.10583 18.5398 4.18208 18.6462 4.29225L19.7135 5.3655C19.8237 5.47183 19.899 5.5885 19.9395 5.7155C19.9798 5.84267 20 5.96975 20 6.09675C20 6.23225 19.9772 6.36192 19.9315 6.48575C19.8858 6.60942 19.8132 6.7225 19.7135 6.825L6.51925 20H4ZM16.2375 7.7625L15.698 7.20375L16.7962 8.302L16.2375 7.7625Z"
+                                    fill="#BBBBBB" />
+                            </g>
+                        </svg>
+
+                    </label>
+                    <label class="label-input" for="email">
+                        <p class="label-input__title">Email</p>
+                        <input type="email" id="email" name="email" required>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <mask id="mask0_82_1006" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
+                                width="24" height="24">
+                                <rect width="24" height="24" fill="#D9D9D9" />
+                            </mask>
+                            <g mask="url(#mask0_82_1006)">
+                                <path
+                                    d="M5 19H6.098L16.7962 8.302L15.698 7.20375L5 17.902V19ZM4 20V17.4808L17.1807 4.2865C17.2832 4.19517 17.3963 4.12458 17.52 4.07475C17.6438 4.02492 17.7729 4 17.9072 4C18.0416 4 18.1717 4.02117 18.2977 4.0635C18.4236 4.10583 18.5398 4.18208 18.6462 4.29225L19.7135 5.3655C19.8237 5.47183 19.899 5.5885 19.9395 5.7155C19.9798 5.84267 20 5.96975 20 6.09675C20 6.23225 19.9772 6.36192 19.9315 6.48575C19.8858 6.60942 19.8132 6.7225 19.7135 6.825L6.51925 20H4ZM16.2375 7.7625L15.698 7.20375L16.7962 8.302L16.2375 7.7625Z"
+                                    fill="#BBBBBB" />
+                            </g>
+                        </svg>
+
+                    </label>
+                    <div class="label-input">
+                        <p class="label-input__title">Роль</p>
+                        <div class="input_role-wrapper">
+                            <label class="label-input-role">
+                                <input data-role="администратор" class="input_role" type="radio" name="role" checked>
+                                <span class="role_admin">администратор</span>
+                            </label>
+                            <label class="label-input-role">
+                                <input data-role="пользователь" class="input_role" type="radio" name="role">
+                                <span class="role_user">пользователь</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="line-decor"></div>
+                    <button type="submit" class="primary-btn">Сохранить</button>
+
+                </form>
+                <div class="btn-delete" onclick="hidePopupEdit()"></div>
+            </div>
+        </div>
+        <div class="popup popup_new-account" style="display: none;">
+            <div class="block block_popup">
+                <div class="popup__title">новый пользователь</div>
+                <form id="addUserForm" class="add-user-form">
+                    <label class="label-input" for="name">
+                        <p class="label-input__title">Имя</p>
+                        <input type="text" id="input-add-name" name="name" required>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <mask id="mask0_82_1006" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
+                                width="24" height="24">
+                                <rect width="24" height="24" fill="#D9D9D9" />
+                            </mask>
+                            <g mask="url(#mask0_82_1006)">
+                                <path
+                                    d="M5 19H6.098L16.7962 8.302L15.698 7.20375L5 17.902V19ZM4 20V17.4808L17.1807 4.2865C17.2832 4.19517 17.3963 4.12458 17.52 4.07475C17.6438 4.02492 17.7729 4 17.9072 4C18.0416 4 18.1717 4.02117 18.2977 4.0635C18.4236 4.10583 18.5398 4.18208 18.6462 4.29225L19.7135 5.3655C19.8237 5.47183 19.899 5.5885 19.9395 5.7155C19.9798 5.84267 20 5.96975 20 6.09675C20 6.23225 19.9772 6.36192 19.9315 6.48575C19.8858 6.60942 19.8132 6.7225 19.7135 6.825L6.51925 20H4ZM16.2375 7.7625L15.698 7.20375L16.7962 8.302L16.2375 7.7625Z"
+                                    fill="#BBBBBB" />
+                            </g>
+                        </svg>
+
+                    </label>
+                    <label class="label-input" for="email">
+                        <p class="label-input__title">Email</p>
+                        <input type="email" id="input-add-email" name="email" required>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <mask id="mask0_82_1006" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
+                                width="24" height="24">
+                                <rect width="24" height="24" fill="#D9D9D9" />
+                            </mask>
+                            <g mask="url(#mask0_82_1006)">
+                                <path
+                                    d="M5 19H6.098L16.7962 8.302L15.698 7.20375L5 17.902V19ZM4 20V17.4808L17.1807 4.2865C17.2832 4.19517 17.3963 4.12458 17.52 4.07475C17.6438 4.02492 17.7729 4 17.9072 4C18.0416 4 18.1717 4.02117 18.2977 4.0635C18.4236 4.10583 18.5398 4.18208 18.6462 4.29225L19.7135 5.3655C19.8237 5.47183 19.899 5.5885 19.9395 5.7155C19.9798 5.84267 20 5.96975 20 6.09675C20 6.23225 19.9772 6.36192 19.9315 6.48575C19.8858 6.60942 19.8132 6.7225 19.7135 6.825L6.51925 20H4ZM16.2375 7.7625L15.698 7.20375L16.7962 8.302L16.2375 7.7625Z"
+                                    fill="#BBBBBB" />
+                            </g>
+                        </svg>
+
+                    </label>
+                    <div class="label-input">
+                        <p class="label-input__title">Роль</p>
+                        <div class="input_role-wrapper">
+                            <label class="label-input-role">
+                                <input data-role="администратор" class="input_role" type="radio" name="role" checked>
+                                <span class="role_admin">администратор</span>
+                            </label>
+                            <label class="label-input-role">
+                                <input data-role="пользователь" class="input_role" type="radio" name="role">
+                                <span class="role_user">пользователь</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="line-decor"></div>
+                    <button type="submit" class="primary-btn" onclick="">Сохранить</button>
+
+                </form>
+                <div class="btn-delete" onclick="hidePopupAdd()"></div>
+            </div>
+        </div>
+    </main>
+
+    <script src="./scripts/main.js"></script>
+    <script src="./scripts/script.js"></script>
+    <!-- ИНТЕРФЕЙС СЕРВЕРА, НЕ ТРОГАТЬ -->
+    <script src="./mapi.js"></script>
+    <script src="./scene.js"></script>
+
+    <!--РЕАЛИЗАЦИЯ ИНТЕРФЕЙСА-->
+    <script src="./usermethods.js"></script>
+    <script src="./adminmethods.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          SuperAdmin.Auth();
+          
+        });
+      </script>
+</body>
+
+</html>

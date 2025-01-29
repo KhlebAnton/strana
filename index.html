@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Страна Знаний</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header__logo"></div>
+        </div>
+
+    </header>
+    <main class="main">
+        <div class="container container_login">
+            <div class="block_login">
+                <p class="login-form__title">вход в аккаунт</p>
+                <form id="loginForm" class="login-form">
+                    <label class="label-input" for="email">
+                        <p class="label-input__title">Email</p>
+                        <input type="email" id="email" name="email" placeholder="ivanovivan@gmail.com" required>
+                    </label>
+                    <label class="label-input" for="password">
+                        <p class="label-input__title">Пароль</p>
+                        <input type="password" id="password" name="password" required>
+                    </label>
+                    <p id="errorMessage" class="error-message"></p>
+                    <div class="line-decor"></div>
+                    <button class="primary-btn" type="submit">Войти</button>
+
+                </form>
+            </div>
+        </div>
+
+    </main>
+    <!-- ИНТЕРФЕЙС СЕРВЕРА, НЕ ТРОГАТЬ -->
+    <script src="./mapi.js"></script>
+    <script src="./scene.js"></script>
+
+    <!--РЕАЛИЗАЦИЯ ИНТЕРФЕЙСА-->
+    <script src="./usermethods.js"></script>
+    <script src="./adminmethods.js"></script>
+    <script src="./scripts/login.js"></script>
+
+</body>
+
+</html>
