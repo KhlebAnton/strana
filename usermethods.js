@@ -7,8 +7,7 @@ class User {
     static Auth(email, pass) {
         MixarWebBackendAPI.authenticateUser(email, pass)
             .then(data => {
-                    console.log("[SignIn] ok");
-                    
+                    console.log("[SignIn] ok")
                 }
             )
             .catch(err => {
@@ -72,10 +71,11 @@ class User {
     /**
      * Получение заголовка проекта по ID
      * @param {number}id
+     * @param callback
      */
-    static GetProject(id) {
+    static GetProject(id, callback) {
         MixarWebBackendAPI.getProject(id)
-            .then(data => console.log("[GetProject]", data))
+            .then(data => callback(data))
             .catch(err => console.trace("[GetProject]", err))
     }
 
@@ -83,9 +83,9 @@ class User {
      * Получение содержимого проекта по ID
      * @param {number}id
      */
-    static GetProjectData(id) {
+    static GetProjectData(id, callback) {
         MixarWebBackendAPI.getProjectData(id)
-            .then(data => console.log("[GetProjectData]", data))
+            .then(data => callback(data))
             .catch(err => console.trace("[GetProjectData]", err))
     }
 
@@ -93,10 +93,10 @@ class User {
      * Обновление (загрузка) проекта на сервер
      * @param {Scene}project
      */
-    static UpdateProject(project) {
+    static UpdateProject(project, callback) {
         MixarWebBackendAPI.updateProject(project.projectId, project.header.name, project.header.description, project.header.visibility, project.project)
             .then(res => {
-                console.log("[UpdateProject] ok", res)
+                callback(res)
             })
             .catch(err => console.log("[UpdateProject] error:", err))
     }

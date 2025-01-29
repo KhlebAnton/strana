@@ -43,7 +43,7 @@ class MixarWebBackendAPI {
     }
 
     // /asset/{id}
-    static getAsset(id) {
+    static  getAsset(id) {
         return new Promise((resolve, reject) => {
             fetch(`${this.apiUrl}/asset/${id}`, {
                 method: 'GET',
@@ -223,7 +223,6 @@ class MixarWebBackendAPI {
                 .then(response => {
                     response.json()
                         .then(json => {
-                            console.log(json)
                             if (!json.status || json.status === 200)
                                 resolve(json)
                             else

@@ -114,6 +114,86 @@ class Scene {
         }
     }
 
+
+    static parseContent(scene, callback) {
+
+        function getDataByIndex(scene, index, callback) {
+            let ii = {image: null, video: null}
+            const check = () => {
+                if (ii.video != null && ii.image != null)
+                    callback(index, ii)
+            }
+            let marker = scene.anchors[index]
+            if (marker.contentId > 1000000) {
+                MixarAPI.getAsset(marker.contentId)
+                    .then(value => {
+                        ii.image = {}
+                        ii.image.name = value.name
+                        ii.image.url = value.domain[0] + value.path
+                        check()
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        ii.image = {}
+                        ii.image.name = null
+                        ii.image.url = null
+                        check()
+                    })
+            } else {
+                ii.image = {}
+                ii.image.name = null
+                ii.image.url = null
+                check()
+            }
+            let video = scene.objects.filter(t => t.transform.parentId === marker.id)
+            if (video.length > 0) {
+                MixarAPI.getAsset(video[0].video.contentId)
+                    .then(value => {
+                        ii.video = {}
+                        ii.video.name = value.name
+                        ii.video.url = value.domain[0] + value.path
+                        check()
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        ii.video = {}
+                        ii.video.name = null
+                        ii.video.url = null
+                        check()
+                    })
+            } else {
+                ii.video = {}
+                ii.video.name = null
+                ii.video.url = null
+                check()
+            }
+        }
+
+        function getDataAll(project, callback) {
+            let scene = project.scenes[0]
+            let cnt = []
+            let index = -1
+            for (let i = 0; i < scene.anchors.length; i++) cnt.push(null)
+
+            function check() {
+                if (index < scene.anchors.length - 1) {
+                    getDataByIndex(scene, ++index, (index, data) => {
+                        cnt[index] = data
+                        check()
+                    })
+                } else
+                    callback(cnt)
+            }
+
+            check()
+        }
+
+        getDataAll(scene, cnt => {
+            scene.content = cnt
+            callback(scene)
+        })
+    }
+
     /**
      * Create new empty project
      * @param title

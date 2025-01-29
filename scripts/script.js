@@ -6,13 +6,17 @@ navBtns.forEach((btn)=> {
         btn.classList.add('open_link');
     });
 })
-
+function closeAllPages() {
+    hideAllContractsPage();
+    hideAllUsersPage();
+    hideNewContractsPage();
+}
 // new-contracts
 const newContractsPage = document.querySelector('.new-contracts-page');
 function showNewContractsPage() {
+    closeAllPages()
     newContractsPage.style.display = '';
-    hideAllContractsPage();
-    hideAllUsersPage();
+    
 };
 function hideNewContractsPage() {
     newContractsPage.style.display = 'none';
@@ -20,9 +24,9 @@ function hideNewContractsPage() {
 // all-contracts
 const allContractsPage = document.querySelector('.all-contracts-page');
 function showAllContractsPage() {
+    closeAllPages()
     allContractsPage.style.display = '';
-    hideNewContractsPage();
-    hideAllUsersPage();
+    
 };
 function hideAllContractsPage() {
     allContractsPage.style.display = 'none';
@@ -35,9 +39,9 @@ btnUserPage.addEventListener('click', ()=> {
 })
 const allUsersPage = document.querySelector('.all-users-page');
 function showAllUsersPage() {
+    closeAllPages()
     allUsersPage.style.display = '';
-    hideNewContractsPage();
-    hideAllContractsPage();
+    
     navBtns.forEach((btn)=> btn.classList.remove('open_link'));
 };
 function hideAllUsersPage() {
