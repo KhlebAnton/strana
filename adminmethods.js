@@ -28,9 +28,9 @@ class SuperAdmin {
             })
     }
 
-    // создание обычного пользователя
-    static CreateUser(name, surname, email, password) {
-        MixarWebBackendAPI.createUser(name, surname, "", email, password, 0)
+    // создание  пользователя
+    static CreateUser(name, surname, email, password, role) {
+        MixarWebBackendAPI.createUser(name, surname, "", email, password, role)
             .then(user => {
                 console.log("[CreateUser] ok");
                 SuperAdmin.GetUsers();
@@ -40,6 +40,13 @@ class SuperAdmin {
             })
     }
 
+    static UpdateUser(id, name, surname, email, password, role) {
+        MixarWebBackendAPI.updateUser(id, name, surname, "", email, password, role)
+            .then(user => {
+                console.log("[UpdateUser] ok")
+            })
+            .catch(err => console.log("[UpdateUser] error:", err))
+    }
     // удаление пользователя
     static DeleteUser(id) {
         MixarWebBackendAPI.deleteUser(id)

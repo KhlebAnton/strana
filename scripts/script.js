@@ -111,7 +111,8 @@ formAddUser.addEventListener('submit', (e)=> {
     let surname = '';
     let email = document.getElementById('input-add-email').value;
     let password = 'ad2512';
-    SuperAdmin.CreateUser(name, surname, email, password);
+    let role = document.getElementById('input-add-role').value;
+    SuperAdmin.CreateUser(name, surname, email, password, role);
     hidePopupAdd();
     popupAdd.querySelectorAll('input').forEach((e)=> e.value='');
 });

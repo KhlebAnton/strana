@@ -524,7 +524,7 @@ td:first-child {
 .files-item__btns .btn-delete {
     position: static;
 }
-.btn-load {
+.btn-download {
     width: 24px;
     height: 24px;
     background: url('./img/arrow_downward_alt.svg') 50% / contain no-repeat;
@@ -590,7 +590,7 @@ td:first-child {
 .new-contracts-table__header th:first-child{
     padding-left: 20px;
 }
-.new-contracts-table__header th:last-child{
+.new-contracts-table__header th:nth-child(2n){
     padding-right: 10px;
     padding-left: 20px;
 }
@@ -605,13 +605,31 @@ td:first-child {
     
 }
 
-.new-contracts-table-body td.new-contracts-table__td-end {
+.new-contracts-table-body td:nth-child(2n) {
     border-radius: 0 100px 100px 0;
     padding-right: 10px;
     padding-left: 20px;
 }
 .new-contracts-table-body .td_btn {
     background-color: inherit;
+}
+.files-item__btns {
+    display: none;
+    gap: 2px;
+}
+.file-input-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+.files-item__name {
+    max-width: 250px;
+    text-overflow:ellipsis ;
+    text-wrap: nowrap;
+    overflow: hidden;
 }
 /* users */
 .user-table {
@@ -624,6 +642,7 @@ td:first-child {
     margin-bottom: 20px;
     font-size: 14px;
 }
+
 .user-table__header {
     background: inherit;
     

@@ -60,7 +60,7 @@ function renderProjects(projects, page, itemsPerPage) {
     `;
     projectTableBody.appendChild(row);
   });
-  
+
 }
 
 // project filter
@@ -152,7 +152,7 @@ function renderUsers(users, page, itemsPerPage) {
   const paginatedUsers = users.slice(start, end);
 
   paginatedUsers.forEach(user => {
-    if(!user.deleted) {
+    if (!user.deleted) {
       const row = document.createElement('tr');
       row.innerHTML = `
         <td>${user.name} ${user.surname}</td>
@@ -169,7 +169,7 @@ function renderUsers(users, page, itemsPerPage) {
       `;
       userTableBody.appendChild(row);
     }
-    
+
   });
 }
 
@@ -258,3 +258,227 @@ function setupPagination(pagePagination, totalItems, itemsPerPage, currentPage, 
 }
 
 
+// add projects
+const tableBody = document.querySelector('.new-contracts-table-body');
+const addPhotoBtn = document.querySelector('.add-photo');
+const batchUploadBtn = document.querySelector('.batch-upload');
+const batchPhotoInput = document.getElementById('batch-photo-input');
+const batchVideoInput = document.getElementById('batch-video-input');
+
+
+// Максимальное количество пар файлов
+const MAX_FILE_PAIRS = 100;
+
+function createFileRow(photoFile = null, videoFile = null) {
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
+        <td>
+            <div class="file-input-wrapper photo-wrapper">
+                <input type="file" class="file-input photo-input" accept=".jpg,.jpeg,.png" style="display:none;">
+                <span class="files-item__name">${photoFile ? photoFile.name : 'Выберите фото (JPEG или PNG)'}</span>
+                <div class="files-item__btns" style="display: ${photoFile ? 'flex' : 'none'};">
+                    <div class="btn-download"></div>
+                    <div class="btn-delete"></div>
+                </div>
+            </div>
+        </td>
+        <td>
+            <div class="file-input-wrapper video-wrapper">
+                <input type="file" class="file-input video-input" accept=".mp4" style="display:none;">
+                <span class="files-item__name">${videoFile ? videoFile.name : 'Выберите видео (MP4)'}</span>
+                <div class="files-item__btns" style="display: ${videoFile ? 'flex' : 'none'};">
+                    <div class="btn-download"></div>
+                    <div class="btn-delete"></div>
+                </div>
+            </div>
+        </td>
+        <td class="td_btn">
+            <div class="btn-delete" onclick="this.closest('tr').remove()"></div>
+        </td>
+    `;
+
+    // Setup file input handlers for the new row
+    setupFileInputHandlers(newRow);
+
+    // If files are provided, setup their handlers
+    if (photoFile) {
+        const photoWrapper = newRow.querySelector('.photo-wrapper');
+        const photoInput = photoWrapper.querySelector('.photo-input');
+        setupSingleFileHandlers(photoWrapper, photoFile);
+    }
+
+    if (videoFile) {
+        const videoWrapper = newRow.querySelector('.video-wrapper');
+        const videoInput = videoWrapper.querySelector('.video-input');
+        setupSingleFileHandlers(videoWrapper, videoFile);
+    }
+
+    return newRow;
+}
+
+function setupSingleFileHandlers(wrapper, file) {
+    const fileInput = wrapper.querySelector('.file-input');
+    const fileNameSpan = wrapper.querySelector('.files-item__name');
+    const btnsContainer = wrapper.querySelector('.files-item__btns');
+    const downloadBtn = btnsContainer.querySelector('.btn-download');
+    const deleteBtn = btnsContainer.querySelector('.btn-delete');
+
+    // Set initial state
+    fileNameSpan.textContent = file.name;
+    btnsContainer.style.display = 'flex';
+
+    // Create a new DataTransfer to simulate a FileList
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(file);
+    fileInput.files = dataTransfer.files;
+
+    // Download handler
+    downloadBtn.onclick = (event) => {
+        event.stopPropagation();
+        const url = URL.createObjectURL(file);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = file.name;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    };
+
+    // Delete handler
+    deleteBtn.onclick = (event) => {
+        event.stopPropagation();
+        fileInput.value = '';
+        fileNameSpan.textContent = fileInput.classList.contains('photo-input') 
+            ? 'Выберите фото (JPEG или PNG)' 
+            : 'Выберите видео (MP4)';
+        btnsContainer.style.display = 'none';
+    };
+}
+
+function setupFileInputHandlers(row) {
+    const fileWrappers = row.querySelectorAll('.file-input-wrapper');
+    fileWrappers.forEach(wrapper => {
+        const fileInput = wrapper.querySelector('.file-input');
+        const fileNameSpan = wrapper.querySelector('.files-item__name');
+        const btnsContainer = wrapper.querySelector('.files-item__btns');
+        const downloadBtn = btnsContainer.querySelector('.btn-download');
+        const deleteBtn = btnsContainer.querySelector('.btn-delete');
+
+        // Open file dialog when wrapper is clicked
+        wrapper.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+
+            // Validate file types
+            const isValidPhoto = fileInput.classList.contains('photo-input') && 
+                ['image/jpeg', 'image/png'].includes(file.type);
+            const isValidVideo = fileInput.classList.contains('video-input') && 
+                file.type === 'video/mp4';
+
+            if (file && (isValidPhoto || isValidVideo)) {
+                // Show buttons
+                btnsContainer.style.display = 'flex';
+
+                // Set file name
+                fileNameSpan.textContent = file.name;
+
+                // Download handler
+                downloadBtn.onclick = (event) => {
+                    event.stopPropagation();
+                    const url = URL.createObjectURL(file);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = file.name;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                };
+
+                // Delete handler
+                deleteBtn.onclick = (event) => {
+                    event.stopPropagation();
+                    fileInput.value = '';
+                    fileNameSpan.textContent = fileInput.classList.contains('photo-input') 
+                        ? 'Выберите фото (JPEG или PNG)' 
+                        : 'Выберите видео (MP4)';
+                    btnsContainer.style.display = 'none';
+                };
+            } else {
+                // Reset file if type is invalid
+                fileInput.value = '';
+                alert(fileInput.classList.contains('photo-input') 
+                    ? 'Пожалуйста, выберите фото в формате JPEG или PNG' 
+                    : 'Пожалуйста, выберите видео в формате MP4');
+            }
+        });
+    });
+}
+
+// Handler for adding a single row
+addPhotoBtn.addEventListener('click', () => {
+    if (tableBody.children.length < MAX_FILE_PAIRS) {
+        const newRow = createFileRow();
+        tableBody.appendChild(newRow);
+    } else {
+        alert(`Максимальное количество пар файлов: ${MAX_FILE_PAIRS}`);
+    }
+});
+
+// Batch upload handler
+batchUploadBtn.addEventListener('click', () => {
+    batchPhotoInput.click();
+});
+
+// Batch file upload handler
+batchPhotoInput.addEventListener('change', (e) => {
+    const photoFiles = Array.from(e.target.files);
+    batchVideoInput.click();
+
+    batchVideoInput.addEventListener('change', (videoEvent) => {
+        const videoFiles = Array.from(videoEvent.target.files);
+
+        // Determine max number of rows
+        const photoCount = photoFiles.length;
+        const videoCount = videoFiles.length;
+        const maxCount = Math.max(photoCount, videoCount);
+
+        // Check row limit
+        const remainingSlots = MAX_FILE_PAIRS - tableBody.children.length;
+        const pairsToAdd = Math.min(maxCount, remainingSlots);
+
+      
+
+        // Add file pairs
+        for (let i = 0; i < pairsToAdd; i++) {
+            const photoFile = photoFiles[i] || null;
+            const videoFile = videoFiles[i] || null;
+
+            // Validate file types
+            const isValidPhoto = !photoFile || ['image/jpeg', 'image/png'].includes(photoFile.type);
+            const isValidVideo = !videoFile || videoFile.type === 'video/mp4';
+
+            if (isValidPhoto && isValidVideo) {
+                const newRow = createFileRow(photoFile, videoFile);
+                tableBody.appendChild(newRow);
+            } else {
+                console.log(`Пара ${i + 1}: Неверный формат файлов. `) ;
+            }
+        }
+
+        // Show upload status
+        if (pairsToAdd < maxCount) {
+            console.log(`Добавлено ${pairsToAdd} из ${maxCount} пар. Достигнут лимит ${MAX_FILE_PAIRS} пар.`);
+        } else if (batchUploadStatus.textContent === '') {
+          console.log(`Успешно добавлено ${pairsToAdd} пар файлов.`);
+        }
+
+        // Reset inputs
+        batchPhotoInput.value = '';
+        batchVideoInput.value = '';
+    }, { once: true });
+});

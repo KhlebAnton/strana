@@ -80,67 +80,21 @@
                     </div>
                     <div class="new-contracts__files-load">
                         <div class="files-load__header">
-                            <button class="primary-btn">Пакетная загрузка</button>
-                            <button class="primary-btn">Добавить фото</button>
+                            <input type="file" id="batch-photo-input" multiple accept=".jpg,.jpeg,.png" style="display:none;">
+                            <input type="file" id="batch-video-input" multiple accept=".mp4" style="display:none;">
+                            <button class="primary-btn batch-upload">Пакетная загрузка</button>
+                            <button class="primary-btn add-photo">Добавить фото</button>
                         </div>
                         <table class="new-contracts-table">
                             <thead class="new-contracts-table__header">
                                 <tr>
                                     <th>Фото</th>
                                     <th>Видео</th>
-
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody class="new-contracts-table-body">
-                                <tr>
-                                    <td>
-                                        <div class="files-item">
-                                            <span class="files-item__name">Иванов Иван.mp4</span>
-                                            <div class="files-item__btns">
-                                                <div class="btn-load"></div>
-                                                <div class="btn-delete"></div>
-                                            </div>
-                                        </div>
-                                    </td>
-
-                                    <td class="new-contracts-table__td-end">
-                                        <div class="files-item">
-                                            <span class="files-item__name">Иванов Иван.mp4</span>
-                                            <div class="files-item__btns">
-                                                <div class="btn-load"></div>
-                                                <div class="btn-delete"></div>
-                                            </div>
-                                        </div>
-
-                                    </td>
-                                    <td class="td_btn">
-                                        <div class="btn-delete"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="files-item">
-                                            <span class="files-item__name">Иванов Иван.mp4</span>
-                                            <div class="files-item__btns">
-                                                <div class="btn-load"></div>
-                                                <div class="btn-delete"></div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="new-contracts-table__td-end">
-                                        <div class="files-item">
-                                            <span class="files-item__name">Иванов Иван.mp4</span>
-                                            <div class="files-item__btns">
-                                                <div class="btn-load"></div>
-                                                <div class="btn-delete"></div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="td_btn">
-                                        <div class="btn-delete"></div>
-                                    </td>
-
-                                </tr>
+                                
                             </tbody>
                         </table>
                     </div>
@@ -281,11 +235,11 @@
                         <p class="label-input__title">Роль</p>
                         <div class="input_role-wrapper">
                             <label class="label-input-role">
-                                <input data-role="администратор" class="input_role" type="radio" name="role" checked>
+                                <input data-role="администратор" id="input-add-role" class="input_role" type="radio" name="role" value="1">
                                 <span class="role_admin">администратор</span>
                             </label>
                             <label class="label-input-role">
-                                <input data-role="пользователь" class="input_role" type="radio" name="role">
+                                <input data-role="пользователь" class="input_role" type="radio" name="role" value="0" checked>
                                 <span class="role_user">пользователь</span>
                             </label>
                         </div>
