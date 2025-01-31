@@ -55,7 +55,7 @@ function renderProjects(projects, page, itemsPerPage) {
       <td>0</td>
       <td><a data-id='${project.id}' href='#'>Скачать QR-код</a></td>
       <div class="btn-group">
-          <div class="btn-delete"></div>
+          <div class="btn-basket"></div>
       </div>
     `;
     projectTableBody.appendChild(row);
@@ -163,8 +163,8 @@ function renderUsers(users, page, itemsPerPage) {
         <span class="${user.role === 0 ? 'role_user' : 'role_admin'}">${user.role === 0 ? 'пользователь' : 'администратор'}</span>
         </td>
         <div class="btn-group">
-          <div class="btn-delete" onclick="showPopupDelete('(${user.name})',${user.id})"></div>
-          <div class="btn-edit" onclick="showPopupEdit('${user.name}','${user.email}','${user.role}')"></div>
+          <a class="btn-edit" onclick="showPopupEdit('${user.name}','${user.email}','${user.role}')">Изменить</a>
+          <div class="btn-basket" onclick="showPopupDelete('(${user.name})',${user.id})"></div>
         </div>
       `;
       userTableBody.appendChild(row);
@@ -293,7 +293,7 @@ function createFileRow(photoFile = null, videoFile = null) {
             </div>
         </td>
         <td class="td_btn">
-            <div class="btn-delete" onclick="this.closest('tr').remove()"></div>
+            <div class="btn-basket" onclick="this.closest('tr').remove()"></div>
         </td>
     `;
 

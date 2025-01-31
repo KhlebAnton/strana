@@ -114,22 +114,26 @@ class Scene {
         }
     }
 
+    /**
+     *
+     * @param {function(Scene)}callback
+     */
+    parseContent(callback) {
 
-    static parseContent(scene, callback) {
-
-        function getDataByIndex(scene, index, callback) {
+        const getDataByIndex = (scene, index, callback) => {
             let ii = {image: null, video: null}
             const check = () => {
                 if (ii.video != null && ii.image != null)
                     callback(index, ii)
             }
             let marker = scene.anchors[index]
-            if (marker.contentId > 1000000) {
-                MixarAPI.getAsset(marker.contentId)
+            if (marker.contentId > 0) {
+                MixarWebBackendAPI.getAsset(marker.contentId)
                     .then(value => {
                         ii.image = {}
                         ii.image.name = value.name
                         ii.image.url = value.domain[0] + value.path
+                        ii.image.id = marker.contentId
                         check()
                     })
                     .catch(err => {
@@ -137,21 +141,24 @@ class Scene {
                         ii.image = {}
                         ii.image.name = null
                         ii.image.url = null
+                        ii.image.id = marker.contentId
                         check()
                     })
             } else {
                 ii.image = {}
                 ii.image.name = null
                 ii.image.url = null
+                ii.image.id = -1
                 check()
             }
             let video = scene.objects.filter(t => t.transform.parentId === marker.id)
-            if (video.length > 0) {
-                MixarAPI.getAsset(video[0].video.contentId)
+            if (video.length > 0 && video[0].video.contentId > 0) {
+                MixarWebBackendAPI.getAsset(video[0].video.contentId)
                     .then(value => {
                         ii.video = {}
                         ii.video.name = value.name
                         ii.video.url = value.domain[0] + value.path
+                        ii.video.id = video[0].video.contentId
                         check()
                     })
                     .catch(err => {
@@ -159,38 +166,43 @@ class Scene {
                         ii.video = {}
                         ii.video.name = null
                         ii.video.url = null
+                        ii.video.id = video[0].video.contentId
                         check()
                     })
             } else {
                 ii.video = {}
                 ii.video.name = null
                 ii.video.url = null
+                ii.video.id = -1
                 check()
             }
         }
 
-        function getDataAll(project, callback) {
+        const getDataAll = (project, callback2) => {
             let scene = project.scenes[0]
             let cnt = []
-            let index = -1
+            let index = 0
             for (let i = 0; i < scene.anchors.length; i++) cnt.push(null)
+            console.log(`[1] ${scene.anchors.length}`)
 
             function check() {
-                if (index < scene.anchors.length - 1) {
-                    getDataByIndex(scene, ++index, (index, data) => {
+                console.log(`[2] ${index} : ${scene.anchors.length}`)
+                if (index < scene.anchors.length) {
+                    getDataByIndex(scene, index++, (index, data) => {
                         cnt[index] = data
+                        console.log("[3]", index, data)
                         check()
                     })
                 } else
-                    callback(cnt)
+                    callback2(cnt)
             }
 
             check()
         }
 
-        getDataAll(scene, cnt => {
-            scene.content = cnt
-            callback(scene)
+        getDataAll(this.project, cnt => {
+            this.content = cnt
+            callback(this)
         })
     }
 
@@ -243,9 +255,9 @@ class Scene {
      * @param {string}videoName
      * @returns {object}
      */
-    static createObject(scene, parentGUID, videoContentId, videoName) {
+    createObject(parentGUID, videoContentId, videoName) {
         return {
-            "id": GUID.createGUID(scene),
+            "id": GUID.createGUID(this),
             "name": videoName,
             "enabled": true,
             "type": 2,
@@ -347,9 +359,9 @@ class Scene {
      * @param {string}imageName
      * @returns {object}
      */
-    static createMarker(scene, imageContentId, imageName) {
+    createMarker(imageContentId, imageName) {
         return {
-            "id": GUID.createGUID(scene),
+            "id": GUID.createGUID(this),
             "type": 0,
             "contentId": imageContentId,
             "markerWidth": 0.2,

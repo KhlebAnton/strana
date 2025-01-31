@@ -150,14 +150,14 @@ class User {
                 MixarWebBackendAPI.getAsset(videoId)
                     .then(asset => {
                         video = asset
-                        marker = Scene.createMarker(scene, markerId, marker.name)
-                        video = Scene.createObject(scene, marker.id, videoId, video.name)
+                        marker = scene.createMarker(markerId, marker.name)
+                        video = scene.createObject(marker.id, videoId, video.name)
                         scene.addContent(marker, video)
                         console.log("[CreateSceneObjects] marker: yes, video: yes")
                     })
                     .catch(err => {
-                        marker = Scene.createMarker(scene, markerId, marker.name)
-                        video = Scene.createObject(scene, marker.id, videoId, video.name)
+                        marker = scene.createMarker(markerId, marker.name)
+                        video = scene.createObject(marker.id, videoId, video.name)
                         scene.addContent(marker, video)
                         console.log("[CreateSceneObjects] marker:yes, video:no")
                     })
@@ -166,14 +166,14 @@ class User {
                 MixarWebBackendAPI.getAsset(videoId)
                     .then(asset => {
                         video = asset
-                        marker = Scene.createMarker(scene, markerId, marker.name)
-                        video = Scene.createObject(scene, marker.id, videoId, video.name)
+                        marker = scene.createMarker(markerId, marker.name)
+                        video = scene.createObject(marker.id, videoId, video.name)
                         scene.addContent(marker, video)
                         console.log("[CreateSceneObjects] marker:no, video:yes")
                     })
                     .catch(err => {
-                        marker = Scene.createMarker(scene, markerId, marker.name)
-                        video = Scene.createObject(scene, marker.id, videoId, video.name)
+                        marker = scene.createMarker(markerId, marker.name)
+                        video = scene.createObject(marker.id, videoId, video.name)
                         scene.addContent(marker, video)
                         console.log("[CreateSceneObjects] marker:no, video:no")
                     })
@@ -206,14 +206,14 @@ class User {
                 MixarWebBackendAPI.getAsset(videoId)
                     .then(asset => {
                         video = asset
-                        marker = Scene.createMarker(scene, markerId, marker.name)
-                        video = Scene.createObject(scene, marker.id, videoId, video.name)
+                        marker = scene.createMarker(markerId, marker.name)
+                        video = scene.createObject(marker.id, videoId, video.name)
                         scene.replaceContent(index, marker, video)
                         console.log("[ReplaceSceneObject] marker: yes, video: yes")
                     })
                     .catch(err => {
-                        marker = Scene.createMarker(scene, markerId, marker.name)
-                        video = Scene.createObject(scene, marker.id, videoId, video.name)
+                        marker = scene.createMarker(markerId, marker.name)
+                        video = scene.createObject(marker.id, videoId, video.name)
                         scene.replaceContent(index, marker, video)
                         console.log("[ReplaceSceneObject] marker:yes, video:no")
                     })
@@ -222,14 +222,14 @@ class User {
                 MixarWebBackendAPI.getAsset(videoId)
                     .then(asset => {
                         video = asset
-                        marker = Scene.createMarker(scene, markerId, marker.name)
-                        video = Scene.createObject(scene, marker.id, videoId, video.name)
+                        marker = scene.createMarker(markerId, marker.name)
+                        video = scene.createObject(marker.id, videoId, video.name)
                         scene.replaceContent(index, marker, video)
                         console.log("[ReplaceSceneObject] marker:no, video:yes")
                     })
                     .catch(err => {
-                        marker = Scene.createMarker(scene, markerId, marker.name)
-                        video = Scene.createObject(scene, marker.id, videoId, video.name)
+                        marker = scene.createMarker(markerId, marker.name)
+                        video = scene.createObject(marker.id, videoId, video.name)
                         scene.replaceContent(index, marker, video)
                         console.log("[ReplaceSceneObject] marker:no, video:no")
                     })

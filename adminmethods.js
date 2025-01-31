@@ -6,7 +6,7 @@ class SuperAdmin {
                 console.log("[Auth] ok");
                 User.GetProjects();
                 SuperAdmin.GetUsers();
-            }
+                }
             )
             .catch(err => {
                 console.log("[Auth] error:", err);
@@ -47,6 +47,7 @@ class SuperAdmin {
             })
             .catch(err => console.log("[UpdateUser] error:", err))
     }
+
     // удаление пользователя
     static DeleteUser(id) {
         MixarWebBackendAPI.deleteUser(id)

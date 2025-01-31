@@ -1,8 +1,8 @@
 // nav btns
 const navBtns = document.querySelector('.header__nav').querySelectorAll('.header__nav_link');
-navBtns.forEach((btn)=> {
-    btn.addEventListener('click', ()=> {
-        navBtns.forEach((btn)=> btn.classList.remove('open_link'))
+navBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+        navBtns.forEach((btn) => btn.classList.remove('open_link'))
         btn.classList.add('open_link');
     });
 })
@@ -16,7 +16,7 @@ const newContractsPage = document.querySelector('.new-contracts-page');
 function showNewContractsPage() {
     closeAllPages()
     newContractsPage.style.display = '';
-    
+
 };
 function hideNewContractsPage() {
     newContractsPage.style.display = 'none';
@@ -26,7 +26,7 @@ const allContractsPage = document.querySelector('.all-contracts-page');
 function showAllContractsPage() {
     closeAllPages()
     allContractsPage.style.display = '';
-    
+
 };
 function hideAllContractsPage() {
     allContractsPage.style.display = 'none';
@@ -34,15 +34,15 @@ function hideAllContractsPage() {
 
 // all-user
 const btnUserPage = document.querySelector('.btn_open-users-page');
-btnUserPage.addEventListener('click', ()=> {
+btnUserPage.addEventListener('click', () => {
     showAllUsersPage();
 })
 const allUsersPage = document.querySelector('.all-users-page');
 function showAllUsersPage() {
     closeAllPages()
     allUsersPage.style.display = '';
-    
-    navBtns.forEach((btn)=> btn.classList.remove('open_link'));
+
+    navBtns.forEach((btn) => btn.classList.remove('open_link'));
 };
 function hideAllUsersPage() {
     allUsersPage.style.display = 'none';
@@ -56,7 +56,7 @@ function showPopupDelete(name, id) {
     popupDelete.style.display = '';
     document.getElementById('nameRole').textContent = name;
     console.log(id)
-    btnDeleteUser.onclick = ()=> SuperAdmin.DeleteUser(id);
+    btnDeleteUser.onclick = () => SuperAdmin.DeleteUser(id);
 };
 function hidePopupDelete() {
     popupDelete.style.display = 'none';
@@ -72,20 +72,20 @@ function showPopupEdit(name, email, roleName) {
     popupEdit.style.display = '';
     popupEditName.value = name;
     popupEditEmail.value = email;
-    popupEditRoles.forEach((role)=> {
+    popupEditRoles.forEach((role) => {
         role.checked = false;
-        if(roleName.toLowerCase() === role.getAttribute('data-role')) {
+        if (roleName.toLowerCase() === role.getAttribute('data-role')) {
             role.checked = true;
         }
-});
-    
+    });
+
 
 };
 function hidePopupEdit() {
     popupEdit.style.display = 'none';
 }
 
-popupEdit.addEventListener('submit', (e)=> {
+popupEdit.addEventListener('submit', (e) => {
     e.preventDefault();
     hidePopupEdit()
 });
@@ -102,21 +102,29 @@ function hidePopupAdd() {
     popupAdd.style.display = 'none';
     btnAddUser.classList.remove('open-popup')
 };
-btnAddUser.addEventListener('click', ()=> {
+btnAddUser.addEventListener('click', () => {
     showPopupAdd();
 });
 
 
 
-formAddUser.addEventListener('submit', (e)=> {
+formAddUser.addEventListener('submit', (e) => {
     e.preventDefault();
 
     let name = document.getElementById('input-add-name').value;
     let surname = '';
     let email = document.getElementById('input-add-email').value;
-    let password = 'ad2512';
+    let password = document.getElementById('input-add-password').value;
     let role = document.getElementById('input-add-role').value;
     SuperAdmin.CreateUser(name, surname, email, password, role);
     hidePopupAdd();
-    popupAdd.querySelectorAll('input').forEach((e)=> e.value='');
+    popupAdd.querySelectorAll('input').forEach((e) => e.value = '');
 });
+// Toggle password visibility
+const togglePassword = document.querySelector('.icon-toggle-password');
+const passwordInput = document.getElementById('input-add-password');
+togglePassword.addEventListener('click', () => {
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute('type', type);
+    togglePassword.closest('.label-input').classList.toggle('show-password');
+  });

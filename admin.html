@@ -80,7 +80,8 @@
                     </div>
                     <div class="new-contracts__files-load">
                         <div class="files-load__header">
-                            <input type="file" id="batch-photo-input" multiple accept=".jpg,.jpeg,.png" style="display:none;">
+                            <input type="file" id="batch-photo-input" multiple accept=".jpg,.jpeg,.png"
+                                style="display:none;">
                             <input type="file" id="batch-video-input" multiple accept=".mp4" style="display:none;">
                             <button class="primary-btn batch-upload">Пакетная загрузка</button>
                             <button class="primary-btn add-photo">Добавить фото</button>
@@ -94,7 +95,7 @@
                                 </tr>
                             </thead>
                             <tbody class="new-contracts-table-body">
-                                
+
                             </tbody>
                         </table>
                     </div>
@@ -174,6 +175,22 @@
                         </svg>
 
                     </label>
+                    <label class="label-input" for="password">
+                        <p class="label-input__title">Пароль</p>
+                        <input type="text" id="password" name="password" required>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <mask id="mask0_82_1006" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
+                                width="24" height="24">
+                                <rect width="24" height="24" fill="#D9D9D9" />
+                            </mask>
+                            <g mask="url(#mask0_82_1006)">
+                                <path
+                                    d="M5 19H6.098L16.7962 8.302L15.698 7.20375L5 17.902V19ZM4 20V17.4808L17.1807 4.2865C17.2832 4.19517 17.3963 4.12458 17.52 4.07475C17.6438 4.02492 17.7729 4 17.9072 4C18.0416 4 18.1717 4.02117 18.2977 4.0635C18.4236 4.10583 18.5398 4.18208 18.6462 4.29225L19.7135 5.3655C19.8237 5.47183 19.899 5.5885 19.9395 5.7155C19.9798 5.84267 20 5.96975 20 6.09675C20 6.23225 19.9772 6.36192 19.9315 6.48575C19.8858 6.60942 19.8132 6.7225 19.7135 6.825L6.51925 20H4ZM16.2375 7.7625L15.698 7.20375L16.7962 8.302L16.2375 7.7625Z"
+                                    fill="#BBBBBB" />
+                            </g>
+                        </svg>
+
+                    </label>
                     <div class="label-input">
                         <p class="label-input__title">Роль</p>
                         <div class="input_role-wrapper">
@@ -201,7 +218,7 @@
                 <form id="addUserForm" class="add-user-form">
                     <label class="label-input" for="name">
                         <p class="label-input__title">Имя</p>
-                        <input type="text" id="input-add-name" name="name" required>
+                        <input type="text" id="input-add-name" name="name" placeholder="Имя" required>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <mask id="mask0_82_1006" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
                                 width="24" height="24">
@@ -217,7 +234,7 @@
                     </label>
                     <label class="label-input" for="email">
                         <p class="label-input__title">Email</p>
-                        <input type="email" id="input-add-email" name="email" required>
+                        <input type="email" id="input-add-email" name="email" placeholder="Email" required>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <mask id="mask0_82_1006" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
                                 width="24" height="24">
@@ -231,15 +248,43 @@
                         </svg>
 
                     </label>
+                    <label class="label-input" for="password">
+                        <p class="label-input__title">Пароль</p>
+                        <input type="password" id="input-add-password" name="password" placeholder="Пароль" required>
+
+                        <svg class="icon-toggle-password" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            
+                            <mask class="eye-closed" id="mask0_197_4600" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
+                                width="24" height="24">
+                                <rect width="24" height="24" fill="#D9D9D9" />
+                            </mask>
+                            <g class="eye-closed" mask="url(#mask0_197_4600)">
+                                <path
+                                    d="M15.4464 12.6463L14.6501 11.8501C14.8001 10.9771 14.5527 10.2213 13.9079 9.58284C13.2631 8.94434 12.5105 8.70009 11.6501 8.85009L10.8539 8.05384C11.0219 7.98467 11.1972 7.93275 11.3799 7.89809C11.5626 7.86359 11.7693 7.84634 12.0001 7.84634C13.0193 7.84634 13.8831 8.2005 14.5914 8.90884C15.2997 9.61717 15.6539 10.4809 15.6539 11.5001C15.6539 11.7309 15.6366 11.9441 15.6021 12.1396C15.5675 12.3351 15.5156 12.504 15.4464 12.6463ZM18.6079 15.7193L17.8501 15.0501C18.4835 14.5668 19.046 14.0376 19.5376 13.4626C20.0293 12.8876 20.4501 12.2334 20.8001 11.5001C19.9668 9.81675 18.771 8.47925 17.2126 7.48759C15.6543 6.49592 13.9168 6.00009 12.0001 6.00009C11.5168 6.00009 11.0418 6.03342 10.5751 6.10009C10.1085 6.16675 9.65015 6.26675 9.20015 6.40009L8.4194 5.61934C9.00023 5.40017 9.59123 5.24217 10.1924 5.14534C10.7937 5.0485 11.3963 5.00009 12.0001 5.00009C14.1706 5.00009 16.1559 5.59659 17.9559 6.78959C19.7559 7.98242 21.0783 9.55259 21.9231 11.5001C21.5655 12.3039 21.1126 13.0593 20.5646 13.7663C20.0165 14.4735 19.3642 15.1245 18.6079 15.7193ZM19.7231 21.1386L15.8309 17.2578C15.3886 17.454 14.8396 17.6268 14.1839 17.7761C13.5281 17.9254 12.8001 18.0001 12.0001 18.0001C9.81681 18.0001 7.83156 17.4036 6.0444 16.2106C4.25723 15.0178 2.93482 13.4476 2.07715 11.5001C2.46548 10.6168 2.97765 9.7895 3.61365 9.01834C4.24948 8.24717 4.92832 7.60009 5.65015 7.07709L2.86165 4.27709L3.5694 3.56934L20.4309 20.4308L19.7231 21.1386ZM6.3579 7.78459C5.78473 8.19242 5.19882 8.72834 4.60015 9.39234C4.00148 10.0565 3.53482 10.7591 3.20015 11.5001C4.03348 13.1834 5.22932 14.5209 6.78765 15.5126C8.34598 16.5043 10.0835 17.0001 12.0001 17.0001C12.5771 17.0001 13.1586 16.944 13.7444 16.8318C14.3302 16.7197 14.7706 16.6065 15.0656 16.4923L13.4346 14.8501C13.277 14.9386 13.0571 15.0113 12.7751 15.0683C12.4931 15.1253 12.2348 15.1538 12.0001 15.1538C10.981 15.1538 10.1172 14.7997 9.4089 14.0913C8.70057 13.383 8.3464 12.5193 8.3464 11.5001C8.3464 11.2783 8.3749 11.0295 8.4319 10.7538C8.4889 10.4783 8.56165 10.2489 8.65015 10.0656L6.3579 7.78459Z"
+                                    fill="#BBBBBB" />
+                            </g>
+                            <mask class="eye-open"  id="mask0_197_4611" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
+                                width="24" height="24">
+                                <rect width="24" height="24" fill="#D9D9D9" />
+                            </mask>
+                            <g class="eye-open" mask="url(#mask0_197_4611)">
+                                <path
+                                    d="M12.0046 15.1538C13.0208 15.1538 13.8831 14.7981 14.5914 14.0868C15.2997 13.3754 15.6539 12.5117 15.6539 11.4955C15.6539 10.4793 15.2982 9.61708 14.5869 8.90875C13.8756 8.20042 13.0118 7.84625 11.9956 7.84625C10.9795 7.84625 10.1172 8.20192 9.4089 8.91325C8.70057 9.62458 8.3464 10.4883 8.3464 11.5045C8.3464 12.5207 8.70207 13.3829 9.4134 14.0913C10.1247 14.7996 10.9885 15.1538 12.0046 15.1538ZM12.0001 14.2C11.2501 14.2 10.6126 13.9375 10.0876 13.4125C9.56265 12.8875 9.30015 12.25 9.30015 11.5C9.30015 10.75 9.56265 10.1125 10.0876 9.5875C10.6126 9.0625 11.2501 8.8 12.0001 8.8C12.7501 8.8 13.3876 9.0625 13.9126 9.5875C14.4376 10.1125 14.7001 10.75 14.7001 11.5C14.7001 12.25 14.4376 12.8875 13.9126 13.4125C13.3876 13.9375 12.7501 14.2 12.0001 14.2ZM12.0029 18C9.8369 18 7.8629 17.4106 6.0809 16.2317C4.2989 15.0529 2.96432 13.4757 2.07715 11.5C2.96432 9.52433 4.29798 7.94708 6.07815 6.76825C7.85831 5.58942 9.8314 5 11.9974 5C14.1634 5 16.1374 5.58942 17.9194 6.76825C19.7014 7.94708 21.036 9.52433 21.9231 11.5C21.036 13.4757 19.7023 15.0529 17.9221 16.2317C16.142 17.4106 14.1689 18 12.0029 18ZM12.0001 17C13.8835 17 15.6126 16.5042 17.1876 15.5125C18.7626 14.5208 19.9668 13.1833 20.8001 11.5C19.9668 9.81667 18.7626 8.47917 17.1876 7.4875C15.6126 6.49583 13.8835 6 12.0001 6C10.1168 6 8.38765 6.49583 6.81265 7.4875C5.23765 8.47917 4.03348 9.81667 3.20015 11.5C4.03348 13.1833 5.23765 14.5208 6.81265 15.5125C8.38765 16.5042 10.1168 17 12.0001 17Z"
+                                    fill="#1C1B1F" />
+                            </g>
+                        </svg>
+                    </label>
                     <div class="label-input">
                         <p class="label-input__title">Роль</p>
                         <div class="input_role-wrapper">
                             <label class="label-input-role">
-                                <input data-role="администратор" id="input-add-role" class="input_role" type="radio" name="role" value="1">
+                                <input data-role="администратор" id="input-add-role" class="input_role" type="radio"
+                                    name="role" value="1">
                                 <span class="role_admin">администратор</span>
                             </label>
                             <label class="label-input-role">
-                                <input data-role="пользователь" class="input_role" type="radio" name="role" value="0" checked>
+                                <input data-role="пользователь" class="input_role" type="radio" name="role" value="0"
+                                    checked>
                                 <span class="role_user">пользователь</span>
                             </label>
                         </div>
@@ -265,10 +310,10 @@
     <script src="./adminmethods.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-          SuperAdmin.Auth();
-          
+            SuperAdmin.Auth();
+
         });
-      </script>
+    </script>
 </body>
 
 </html>
