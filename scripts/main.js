@@ -45,13 +45,14 @@ function renderProjects(projects, page, itemsPerPage) {
   const start = (page - 1) * itemsPerPage;
   const end = start + itemsPerPage;
   const paginatedProjects = projects.slice(start, end);
-
+  
   paginatedProjects.forEach(project => {
     const row = document.createElement('tr');
+    let date = ToDate(project.create);
     row.innerHTML = `
       <td>${project.name} <a data-id='${project.id}' href='#'>Изменить</a></td>
       
-      <td>${project.updated}</td>
+      <td>${date.days}.${date.months}.${date.year}</td>
       <td>0</td>
       <td><a data-id='${project.id}' href='#'>Скачать QR-код</a></td>
       <div class="btn-group">

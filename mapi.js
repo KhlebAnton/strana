@@ -31,11 +31,19 @@ class Cookie {
 
 class MixarWebBackendAPI {
     static apiUrl = 'https://api.strzn.dmurz.su'
-    static token = ""
+
+    static get token() {
+        return Cookie.getCookie("token")
+    }
+
+    static set token(value) {
+        Cookie.setCookie('token', value, 3)
+    }
 
     static getHeaders(headersAdd = null) {
         let res = new Headers()
-        res.append("Token", `${this.token}`)
+        if (this.token !== "")
+            res.append("Token", `${this.token}`)
         if (headersAdd != null)
             for (const key in headersAdd)
                 res.append(key, headersAdd[key])
@@ -43,7 +51,7 @@ class MixarWebBackendAPI {
     }
 
     // /asset/{id}
-    static  getAsset(id) {
+    static getAsset(id) {
         return new Promise((resolve, reject) => {
             fetch(`${this.apiUrl}/asset/${id}`, {
                 method: 'GET',
@@ -370,3 +378,10 @@ class MixarWebBackendAPI {
     }
 }
 
+function ToDate(value) {
+    let date = new Date(value * 1000)
+    return {
+        hours: date.getHours(), minutes: date.getMinutes(), seconds: date.getSeconds(),
+        days: date.getDate(), months: date.getMonth() + 1, year: date.getFullYear()
+    }
+}

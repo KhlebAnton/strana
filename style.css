@@ -977,9 +977,6 @@ td:first-child {
     height: 24px;
     fill: #666;
 }
-.icon-toggle-password:hover {
-    fill: ;
-}
 
 .eye-open {
     display: none;

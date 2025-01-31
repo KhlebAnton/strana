@@ -3,9 +3,9 @@ class SuperAdmin {
     static Auth() {
         MixarWebBackendAPI.authenticateUser("VtLhldJ9bgQIQBUl74e1YcN9Vmivxn2w", "NNhTT84xIrk06mh8ui8EyNEYtLBfd6kJ")
             .then(data => {
-                console.log("[Auth] ok");
-                User.GetProjects();
-                SuperAdmin.GetUsers();
+                    console.log("[Auth] ok");
+                    User.GetProjects();
+                    SuperAdmin.GetUsers();
                 }
             )
             .catch(err => {
@@ -17,14 +17,17 @@ class SuperAdmin {
 
     // получение списка аккаунтов
     // в структуре юзера поле deleted отвечает за флаг удалённого аккаунта
-    static GetUsers() {
+    static GetUsers(callback) {
+        const cb = callback
         MixarWebBackendAPI.getUsers()
             .then(users => {
-                console.log("[GetUsers]", users);
-                initUsers(users)
+                //console.log("[GetUsers]", users);
+                cb(users)
+                //initUsers(users)
             })
             .catch(err => {
-                console.log("[GetUsers]", err)
+                //console.log("[GetUsers]", err)
+                cb(null)
             })
     }
 

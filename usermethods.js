@@ -3,15 +3,18 @@ class User {
      * Авторизация
      * @param {string}email
      * @param {string}pass
+     * @param callback
      */
-    static Auth(email, pass) {
+    static Auth(email, pass, callback) {
         MixarWebBackendAPI.authenticateUser(email, pass)
             .then(data => {
                     console.log("[SignIn] ok")
+                    callback(true)
                 }
             )
             .catch(err => {
                 console.log("[SignIn] error:", err)
+                callback(false)
             })
     }
 
