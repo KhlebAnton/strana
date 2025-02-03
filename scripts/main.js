@@ -50,13 +50,13 @@ function renderProjects(projects, page, itemsPerPage) {
     const row = document.createElement('tr');
     let date = ToDate(project.create);
     row.innerHTML = `
-      <td>${project.name} <a data-id='${project.id}' href='#'>Изменить</a></td>
+      <td>${project.name} <a data-id='${project.id}' onclick="showNewContractsPage(${project.id})">Изменить</a></td>
       
       <td>${date.days}.${date.months}.${date.year}</td>
       <td>0</td>
-      <td><a data-id='${project.id}' href='#'>Скачать QR-код</a></td>
+      <td><a data-id='${project.id}' onclick="loadQr(${project.id}, '${project.name}')">Скачать QR-код</a></td>
       <div class="btn-group">
-          <div class="btn-basket"></div>
+          <div class="btn-basket" onclick="User.RestoreProject(${project.id})"></div>
       </div>
     `;
     projectTableBody.appendChild(row);

@@ -11,6 +11,8 @@ function closeAllPages() {
     hideAllUsersPage();
     hideNewContractsPage();
     nameProject = undefined;
+    inputNewContract.value = '';
+    tableBody.innerHTML = '';
 }
 // new-contracts
 const inputNewContract = document.querySelector('.new-contracts__input')
@@ -22,19 +24,24 @@ let openProject;
 
 const qrel = document.getElementById('qrel');
 const qrelBtn = document.getElementById('qrel-btn');
-let urlQR;
-qrelBtn.addEventListener('click', ()=> {
-    var link = document.createElement("a");
-    link.download = `QR-${nameProject}`;
-    link.href = urlQR;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    delete link;
+
+qrelBtn.addEventListener('click', () => {
+    loadQr(idProject, nameProject)
 });
+function loadQr(id, name) {
+    User.GenerateQR(id, qrel, urlQR => {
+        var link = document.createElement("a");
+        link.download = `QR-${name}`;
+        link.href = urlQR;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        delete link;
+    })
+}
 function parsingProject() {
     openProject.parseContent(d => {
-        nameProject = d.name === undefined ? `Новый договор ${idProject}` : d.name;
+        nameProject = d.header.name === "undefined" ? `Новый договор ${idProject}` : d.header.name;
         inputNewContract.value = nameProject;
         let content = project.content;
         createFileRow(content);
@@ -42,8 +49,6 @@ function parsingProject() {
     });
 }
 function showNewContractsPage(res) {
-    urlQR = '';
-    qrelBtn.setAttribute('disabled', '')
     idProject = res;
     closeAllPages()
     newContractsPage.style.display = '';
@@ -53,17 +58,13 @@ function showNewContractsPage(res) {
             scene = data
             project = new Scene(scene, header);
             openProject = project;
-            User.GenerateQR(openProject,qrel, res => {
-                console.log(res);
-                urlQR = res;
-                qrelBtn.removeAttribute('disabled');
-                
-            })
-            updateProject();
+
             parsingProject();
+            updateProject();
+            
         });
     });
-    
+
 
 
 };

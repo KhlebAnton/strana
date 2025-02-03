@@ -103,7 +103,7 @@ class User {
      * @param {Scene}project
      */
     static UpdateProject(project, callback) {
-        MixarWebBackendAPI.updateProject(project.projectId, project.header.name, project.header.description, project.header.visibility, project.project)
+        MixarWebBackendAPI.updateProject(project.projectId, project.header.name, project.header.description, project.header.visibility, JSON.stringify(project.project))
             .then(res => {
                 callback(res);
                 User.GetProjects();
@@ -262,11 +262,11 @@ class User {
 
     /**
      *
-     * @param {Scene}scene
+     * @param {number}id
      * @param {HTMLElement}element
      * @param {function("data:image/png;base64,")}callback
      */
-    static GenerateQR(scene, element, callback) {
+    static GenerateQR(id, element, callback) {
         if (this.qrcode == null) {
             this.qrcode = new QRCode(element.id, {
                 text: "dummytext",
@@ -278,7 +278,7 @@ class User {
             })
         }
         this.qrcode.clear()
-        this.qrcode.makeCode(this.baseURL + scene.header.id)
+        this.qrcode.makeCode(`${this.baseURL}${id}`)
         setTimeout(() => callback(element.children[1].src), 1000)
     }
 

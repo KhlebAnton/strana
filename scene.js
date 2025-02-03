@@ -115,7 +115,7 @@ class Scene {
     }
 
     /**
-     *
+     * Parse project to construct media list
      * @param {function(Scene)}callback
      */
     parseContent(callback) {
@@ -183,14 +183,11 @@ class Scene {
             let cnt = []
             let index = 0
             for (let i = 0; i < scene.anchors.length; i++) cnt.push(null)
-            console.log(`[1] ${scene.anchors.length}`)
 
             function check() {
-                console.log(`[2] ${index} : ${scene.anchors.length}`)
                 if (index < scene.anchors.length) {
                     getDataByIndex(scene, index++, (index, data) => {
                         cnt[index] = data
-                        console.log("[3]", index, data)
                         check()
                     })
                 } else
@@ -202,6 +199,7 @@ class Scene {
 
         getDataAll(this.project, cnt => {
             this.content = cnt
+            this.header.description = cnt.length
             callback(this)
         })
     }
@@ -249,7 +247,6 @@ class Scene {
 
     /**
      * Create video object
-     * @param scene
      * @param {string}parentGUID - assigned marker GUID (use id from marker)
      * @param {number}videoContentId - ID of uploaded video
      * @param {string}videoName
@@ -354,7 +351,6 @@ class Scene {
 
     /**
      * Create marker with image
-     * @param {Scene}scene
      * @param {number}imageContentId - ID of uploaded image
      * @param {string}imageName
      * @returns {object}
@@ -377,6 +373,7 @@ class Scene {
     addContent(marker, object) {
         this.project.scenes[0].anchors.push(marker)
         this.project.scenes[0].objects.push(object)
+        return this.project.scenes[0].anchors.length - 1
     }
 
     /**
@@ -406,4 +403,5 @@ class Scene {
     saveScene() {
         return MixarWebBackendAPI.updateProject(this.header.id, this.header.name, this.header.description, JSON.stringify(this.project), 0)
     }
+
 }

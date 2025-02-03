@@ -214,9 +214,7 @@ class MixarWebBackendAPI {
                 .then(response => {
                     response.json()
                         .then(json => resolve({status: json.status, statusText: json.statusText}))
-                        .catch(err => {
-                            response.text().then(text => resolve(text))
-                        })
+                        .catch(err => resolve(err))
                 })
                 .catch(reject)
         })
@@ -295,7 +293,7 @@ class MixarWebBackendAPI {
         })
     }
 
-    static getCurrentUser(){
+    static getCurrentUser() {
         return new Promise((resolve, reject) => {
             fetch(`${this.apiUrl}/user/me`, {
                 method: 'GET',
