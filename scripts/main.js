@@ -164,7 +164,7 @@ function renderUsers(users, page, itemsPerPage) {
         <span class="${user.role === 0 ? 'role_user' : 'role_admin'}">${user.role === 0 ? 'пользователь' : 'администратор'}</span>
         </td>
         <div class="btn-group">
-          <a class="btn-edit" onclick="showPopupEdit('${user.name}','${user.email}','${user.role}')">Изменить</a>
+          <a class="btn-edit" onclick="showPopupEdit('${user.name}','${user.email}','${user.role}','${user.secret}','${user.id}')">Изменить</a>
           <div class="btn-basket" onclick="showPopupDelete('(${user.name})',${user.id})"></div>
         </div>
       `;

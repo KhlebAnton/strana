@@ -66,15 +66,21 @@ function hidePopupDelete() {
 const popupEdit = document.querySelector('.popup_edit');
 const popupEditName = popupEdit.querySelector('input[name="name"]');
 const popupEditEmail = popupEdit.querySelector('input[name="email"]');
-const popupEditRoles = popupEdit.querySelectorAll('input[name="role"]')
+const popupEditRoles = popupEdit.querySelectorAll('input[name="role"]');
+const popupEditPassword = popupEdit.querySelector('input[name="password"]')
 
-function showPopupEdit(name, email, roleName) {
+let userEditId;
+function showPopupEdit(name, email, roleName, password, id) {
+    userEditId = id;
     popupEdit.style.display = '';
     popupEditName.value = name;
     popupEditEmail.value = email;
+    popupEditPassword.value = password;
     popupEditRoles.forEach((role) => {
         role.checked = false;
-        if (roleName.toLowerCase() === role.getAttribute('data-role')) {
+        if (roleName === '0' && role.getAttribute('data-role') === 'пользователь') {
+            role.checked = true;
+        } else if(roleName !== '0' && role.getAttribute('data-role') === 'администратор') {
             role.checked = true;
         }
     });
@@ -87,7 +93,19 @@ function hidePopupEdit() {
 
 popupEdit.addEventListener('submit', (e) => {
     e.preventDefault();
-    hidePopupEdit()
+   
+    
+    let name = popupEditName.value;
+    let email = popupEditEmail.value;
+    let password = popupEditPassword.value;
+    let role;
+    popupEditRoles.forEach((roleInput) => {
+        if(roleInput.checked) {
+            role = roleInput.getAttribute('data-role') === 'администратор' ? role = 1000 : role = 0;
+        };
+       
+    });
+    SuperAdmin.UpdateUser(userEditId,name, '', email, password, role);
 });
 
 ///add user
@@ -115,9 +133,10 @@ formAddUser.addEventListener('submit', (e) => {
     let surname = '';
     let email = document.getElementById('input-add-email').value;
     let password = document.getElementById('input-add-password').value;
-    let role = document.getElementById('input-add-role').value;
+    let role = document.getElementById('input-add-role').checked === true ? 1000 : 0;
     SuperAdmin.CreateUser(name, surname, email, password, role);
     hidePopupAdd();
+    console.log('role-', role)
     popupAdd.querySelectorAll('input').forEach((e) => e.value = '');
 });
 // Toggle password visibility

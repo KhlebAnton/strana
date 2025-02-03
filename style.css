@@ -246,9 +246,11 @@ input:hover {
 }
 
 .block_account .primary-btn {
-    margin: 18px 0;
+    margin-bottom: 18px;
 }
-
+.block_account .user-mail {
+    margin-bottom: 18px;
+}
 .user-mail__title {
     padding: 4px 0;
     font-size: 10px;

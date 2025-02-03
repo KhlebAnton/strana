@@ -13,10 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (result === true) {
                 SuperAdmin.GetUsers(res => {
                     if (res != null) {
-                        // Успешный вход
+                        // Если есть список пользователей - это админ
                         window.location.href = './admin.html'
                     } else {
-                        // Успешный вход
+                        // Если null - это обычный пользователь
                         window.location.href = './admin.html'
                     }
                 })

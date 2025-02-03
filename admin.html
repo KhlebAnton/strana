@@ -21,7 +21,7 @@
                 <div class="block block_account">
                     <p class="user-mail__title">Вы вошли как:</p>
                     <p class="user-mail">email@gmail.com</p>
-                    <button class="primary-btn btn_open-users-page">Управление аккаунтами</button>
+                    <button id="adminBtn" style="display: none;" class="primary-btn btn_open-users-page">Управление аккаунтами</button>
                     <div class="exit-wrapper" onclick="window.location.href='./index.html' ">
                         <button class="exit-btn">Выход</button>
                     </div>
@@ -72,7 +72,7 @@
                         <div class="new-contracts__inputs-wrapper">
                             <input class="new-contracts__input" type="text" placeholder="Номер договора или проекта">
                             <button class="primary-btn">Сохранить</button>
-                            <button class="primary-btn">Сохранить QR-код</button>
+                            <button class="primary-btn">Скачать QR-код</button>
                         </div>
                         <div class="new-contracts__count-files">
                             Загружено: 2 фото
@@ -279,7 +279,7 @@
                         <div class="input_role-wrapper">
                             <label class="label-input-role">
                                 <input data-role="администратор" id="input-add-role" class="input_role" type="radio"
-                                    name="role" value="1">
+                                    name="role" value="1000">
                                 <span class="role_admin">администратор</span>
                             </label>
                             <label class="label-input-role">
@@ -314,6 +314,15 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             User.GetProjects();
+            SuperAdmin.GetUsers(res => {
+                    if (res != null) {
+                        initUsers(res);
+                        document.getElementById('adminBtn').style.display = 'block';
+                    } else {
+                        
+                        document.getElementById('adminBtn').style.display = 'none';
+                    }
+                })
         });
     </script>
 </body>

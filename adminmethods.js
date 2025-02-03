@@ -18,16 +18,17 @@ class SuperAdmin {
     // получение списка аккаунтов
     // в структуре юзера поле deleted отвечает за флаг удалённого аккаунта
     static GetUsers(callback) {
-        const cb = callback
         MixarWebBackendAPI.getUsers()
-            .then(users => {
-                //console.log("[GetUsers]", users);
-                cb(users)
-                //initUsers(users)
-            })
+        .then(users => {
+            let users2 = []
+            for (let i = users.length - 1; i >= 0; i--)
+                users2.push(users[i])
+            callback(users2)
+            console.log(users2)
+        })
             .catch(err => {
-                //console.log("[GetUsers]", err)
-                cb(null)
+                console.log("[GetUsers]", err)
+                callback(null)
             })
     }
 
@@ -36,7 +37,7 @@ class SuperAdmin {
         MixarWebBackendAPI.createUser(name, surname, "", email, password, role)
             .then(user => {
                 console.log("[CreateUser] ok");
-                SuperAdmin.GetUsers();
+                SuperAdmin.GetUsers(res => { initUsers(res)})
             })
             .catch(err => {
                 console.log("[CreateUser] error:", err)
@@ -46,7 +47,9 @@ class SuperAdmin {
     static UpdateUser(id, name, surname, email, password, role) {
         MixarWebBackendAPI.updateUser(id, name, surname, "", email, password, role)
             .then(user => {
-                console.log("[UpdateUser] ok")
+                console.log("[UpdateUser] ok");
+                SuperAdmin.GetUsers(res => { initUsers(res)});
+                hidePopupEdit();
             })
             .catch(err => console.log("[UpdateUser] error:", err))
     }
@@ -57,7 +60,7 @@ class SuperAdmin {
             .then(user => {
                 console.log("[DeleteUser] ok");
                 btnDeleteUser.onclick = '';
-                SuperAdmin.GetUsers();
+                SuperAdmin.GetUsers(res => { initUsers(res)})
                 hidePopupDelete();
             })
             .catch(err => {
