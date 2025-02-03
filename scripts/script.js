@@ -10,6 +10,7 @@ function closeAllPages() {
     hideAllContractsPage();
     hideAllUsersPage();
     hideNewContractsPage();
+    nameProject = undefined;
 }
 // new-contracts
 const inputNewContract = document.querySelector('.new-contracts__input')
@@ -19,18 +20,30 @@ let idProject;
 let nameProject;
 let openProject;
 
+const qrel = document.getElementById('qrel');
+const qrelBtn = document.getElementById('qrel-btn');
+let urlQR;
+qrelBtn.addEventListener('click', ()=> {
+    var link = document.createElement("a");
+    link.download = `QR-${nameProject}`;
+    link.href = urlQR;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    delete link;
+});
 function parsingProject() {
     openProject.parseContent(d => {
-        console.log("[1]", d);
         nameProject = d.name === undefined ? `Новый договор ${idProject}` : d.name;
         inputNewContract.value = nameProject;
         let content = project.content;
-        console.log(content);
         createFileRow(content);
 
     });
 }
 function showNewContractsPage(res) {
+    urlQR = '';
+    qrelBtn.setAttribute('disabled', '')
     idProject = res;
     closeAllPages()
     newContractsPage.style.display = '';
@@ -40,6 +53,12 @@ function showNewContractsPage(res) {
             scene = data
             project = new Scene(scene, header);
             openProject = project;
+            User.GenerateQR(openProject,qrel, res => {
+                console.log(res);
+                urlQR = res;
+                qrelBtn.removeAttribute('disabled');
+                
+            })
             updateProject();
             parsingProject();
         });
@@ -90,7 +109,6 @@ const btnDeleteUser = document.getElementById('btn-delete-user')
 function showPopupDelete(name, id) {
     popupDelete.style.display = '';
     document.getElementById('nameRole').textContent = name;
-    console.log(id)
     btnDeleteUser.onclick = () => SuperAdmin.DeleteUser(id);
 };
 function hidePopupDelete() {
@@ -171,7 +189,6 @@ formAddUser.addEventListener('submit', (e) => {
     let role = document.getElementById('input-add-role').checked === true ? 1000 : 0;
     SuperAdmin.CreateUser(name, surname, email, password, role);
     hidePopupAdd();
-    console.log('role-', role)
     popupAdd.querySelectorAll('input').forEach((e) => e.value = '');
 });
 // Toggle password visibility

@@ -371,14 +371,14 @@ function handleFileUpload(event, type, sceneIndex) {
   sceneId = sceneIndex;
 
   const fileName = file.name;
-  const fileExtension = fileName.split('.').pop();
+  const fileExtension = fileName.slice(fileName.lastIndexOf('.') + 1);
   const pid = openProject.projectId; // ID проекта
 
   // Чтение файла как Blob
   const reader = new FileReader();
   reader.onload = function (e) {
     const blob = new Blob([e.target.result], { type: file.type });
-    console.log(blob)
+    
 
     if (type === 'photo') {
       User.CreateMarker(fileName, fileExtension, pid, blob)

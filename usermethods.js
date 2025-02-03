@@ -8,9 +8,9 @@ class User {
     static Auth(email, pass, callback) {
         MixarWebBackendAPI.authenticateUser(email, pass)
             .then(data => {
-                console.log("[SignIn] ok")
-                callback(true)
-            }
+                    console.log("[SignIn] ok")
+                    callback(true)
+                }
             )
             .catch(err => {
                 console.log("[SignIn] error:", err)
@@ -154,8 +154,8 @@ class User {
      * @constructor
      */
     static CreateSceneObjects(scene, markerId, videoId) {
-        let marker = { name: "" }
-        let video = { name: "" }
+        let marker = {name: ""}
+        let video = {name: ""}
         MixarWebBackendAPI.getAsset(markerId)
             .then(asset => {
                 marker = asset
@@ -203,7 +203,7 @@ class User {
      */
     static DeleteSceneObject(scene, index) {
         scene.removeContent(index)
-        
+
     }
 
     /**
@@ -215,8 +215,8 @@ class User {
      * @constructor
      */
     static ReplaceSceneObject(scene, index, markerId, videoId) {
-        let marker = { name: "" }
-        let video = { name: "" }
+        let marker = {name: ""}
+        let video = {name: ""}
         MixarWebBackendAPI.getAsset(markerId)
             .then(asset => {
                 marker = asset
@@ -257,4 +257,39 @@ class User {
             })
     }
 
+    static baseURL = "https://dummy.org/"
+    static qrcode = null
+
+    /**
+     *
+     * @param {Scene}scene
+     * @param {HTMLElement}element
+     * @param {function("data:image/png;base64,")}callback
+     */
+    static GenerateQR(scene, element, callback) {
+        if (this.qrcode == null) {
+            this.qrcode = new QRCode(element.id, {
+                text: "dummytext",
+                width: 256,
+                height: 256,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            })
+        }
+        this.qrcode.clear()
+        this.qrcode.makeCode(this.baseURL + scene.header.id)
+        setTimeout(() => callback(element.children[1].src), 1000)
+    }
+
+    static GetCurrentUser(callback) {
+        MixarWebBackendAPI.getCurrentUser()
+            .then(res => {
+                callback(res)
+            })
+            .catch(err => {
+                console.log("[GetCurrentUser] error:", err)
+                callback(null)
+            })
+    }
 }

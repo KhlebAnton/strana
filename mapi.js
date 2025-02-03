@@ -295,6 +295,26 @@ class MixarWebBackendAPI {
         })
     }
 
+    static getCurrentUser(){
+        return new Promise((resolve, reject) => {
+            fetch(`${this.apiUrl}/user/me`, {
+                method: 'GET',
+                headers: this.getHeaders(),
+            })
+                .then(response => {
+                    response.json()
+                        .then(json => {
+                            if (!json.status || json.status === 200)
+                                resolve(json)
+                            else
+                                reject(json)
+                        })
+                        .catch(reject)
+                })
+                .catch(reject)
+        })
+    }
+
     static createUser(name = "", surname = "", picture = "", email = "", secret = "", role = 0) {
         return new Promise((resolve, reject) => {
             fetch(`${this.apiUrl}/user`, {

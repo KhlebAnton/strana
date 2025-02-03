@@ -76,7 +76,12 @@ a:hover {
     background: inherit;
     color: #000000;
 }
-
+.primary-btn:disabled {
+    background-color: #00000011;
+    border: 2px solid #ffb23648;
+    color: #00000077;
+    pointer-events: none;
+}
 .btn-add-user.open-popup {
     background-color: #FFB236;
 }
