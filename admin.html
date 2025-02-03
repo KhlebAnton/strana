@@ -14,7 +14,7 @@
             <div class="header__nav">
                 <div class="header__logo"></div>
                 <span class="header__nav_link open_link" onclick="showAllContractsPage()">Все договоры</span>
-                <span class="header__nav_link" onclick="showNewContractsPage()">Создать договор</span>
+                <span class="header__nav_link" onclick="User.CreateProject()">Создать договор</span>
             </div>
             <div class="header__nav_link account_btn" ontouchstart>
                 <span>Аккаунт</span>
@@ -71,7 +71,7 @@
                     <div class="new-contracts__header">
                         <div class="new-contracts__inputs-wrapper">
                             <input class="new-contracts__input" type="text" placeholder="Номер договора или проекта">
-                            <button class="primary-btn">Сохранить</button>
+                            <button class="primary-btn" onclick="updateProject()">Сохранить</button>
                             <button class="primary-btn">Скачать QR-код</button>
                         </div>
                         <div class="new-contracts__count-files">
@@ -84,7 +84,7 @@
                                 style="display:none;">
                             <input type="file" id="batch-video-input" multiple accept=".mp4" style="display:none;">
                             <button class="primary-btn batch-upload">Пакетная загрузка</button>
-                            <button class="primary-btn add-photo">Добавить фото</button>
+                            <button class="primary-btn add-photo" onclick="User.CreateSceneObjects(openProject, -1, -1);">Добавить фото</button>
                         </div>
                         <table class="new-contracts-table">
                             <thead class="new-contracts-table__header">

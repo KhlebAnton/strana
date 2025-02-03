@@ -12,12 +12,47 @@ function closeAllPages() {
     hideNewContractsPage();
 }
 // new-contracts
+const inputNewContract = document.querySelector('.new-contracts__input')
 const newContractsPage = document.querySelector('.new-contracts-page');
-function showNewContractsPage() {
+
+let idProject;
+let nameProject;
+let openProject;
+
+function parsingProject() {
+    openProject.parseContent(d => {
+        console.log("[1]", d);
+        nameProject = d.name === undefined ? `Новый договор ${idProject}` : d.name;
+        inputNewContract.value = nameProject;
+        let content = project.content;
+        console.log(content);
+        createFileRow(content);
+
+    });
+}
+function showNewContractsPage(res) {
+    idProject = res;
     closeAllPages()
     newContractsPage.style.display = '';
+    User.GetProject(idProject, data => {
+        header = data;
+        User.GetProjectData(idProject, data => {
+            scene = data
+            project = new Scene(scene, header);
+            openProject = project;
+            updateProject();
+            parsingProject();
+        });
+    });
+    
+
 
 };
+
+function updateProject() {
+    openProject.header.name = inputNewContract.value;
+    User.UpdateProject(openProject, (res) => console.log('update proj', res))
+}
 function hideNewContractsPage() {
     newContractsPage.style.display = 'none';
 };
@@ -80,7 +115,7 @@ function showPopupEdit(name, email, roleName, password, id) {
         role.checked = false;
         if (roleName === '0' && role.getAttribute('data-role') === 'пользователь') {
             role.checked = true;
-        } else if(roleName !== '0' && role.getAttribute('data-role') === 'администратор') {
+        } else if (roleName !== '0' && role.getAttribute('data-role') === 'администратор') {
             role.checked = true;
         }
     });
@@ -93,19 +128,19 @@ function hidePopupEdit() {
 
 popupEdit.addEventListener('submit', (e) => {
     e.preventDefault();
-   
-    
+
+
     let name = popupEditName.value;
     let email = popupEditEmail.value;
     let password = popupEditPassword.value;
     let role;
     popupEditRoles.forEach((roleInput) => {
-        if(roleInput.checked) {
+        if (roleInput.checked) {
             role = roleInput.getAttribute('data-role') === 'администратор' ? role = 1000 : role = 0;
         };
-       
+
     });
-    SuperAdmin.UpdateUser(userEditId,name, '', email, password, role);
+    SuperAdmin.UpdateUser(userEditId, name, '', email, password, role);
 });
 
 ///add user
@@ -146,4 +181,4 @@ togglePassword.addEventListener('click', () => {
     const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
     passwordInput.setAttribute('type', type);
     togglePassword.closest('.label-input').classList.toggle('show-password');
-  });
+});
