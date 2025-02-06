@@ -33,6 +33,9 @@
     </header>
     <main class="main">
         <div class="container">
+            <div class="error-message_block" style="display: none;">
+                <div class="error-message_text">ошибка</div>
+            </div>
             <div class="all-contracts-page">
                 <p class="page__title">Все договоры</p>
                 <div class="block block_contracts">
@@ -76,19 +79,25 @@
                             <button id="qrel-btn" class="primary-btn">Скачать QR-код</button>
                         </div>
                         <div class="new-contracts__count-files">
-                            Загружено: 2 фото
+                            Загружено: <span id="uploadingPhoto"></span> фото
                         </div>
                     </div>
                     <div class="new-contracts__files-load">
                         <div class="files-load__header">
-                            <input type="file" id="batch-photo-input" multiple accept=".jpg,.jpeg,.png"
+                           
+                                <input type="file" id="batch-input" multiple accept=".jpg,.jpeg,.png,.mp4"
                                 style="display:none;">
-                            <input type="file" id="batch-video-input" multiple accept=".mp4" style="display:none;">
-                            <button class="primary-btn batch-upload">Пакетная загрузка</button>
+                                <button class="primary-btn batch-upload">Пакетная загрузка</button>
+                            
+                            
                             <button class="primary-btn add-photo"
                                 onclick="User.CreateSceneObjects(openProject, -1, -1);">Добавить фото</button>
                         </div>
+                        <div class="load-batch">
+                            <div class="load-batch__text">Загрузка файлов...</div>
+                        </div>
                         <table class="new-contracts-table">
+                            
                             <thead class="new-contracts-table__header">
                                 <tr>
                                     <th>Фото</th>
@@ -300,6 +309,7 @@
                 <div class="btn-delete" onclick="hidePopupAdd()"></div>
             </div>
         </div>
+        
     </main>
     <div id="qrel" style="display: none;"></div>
 

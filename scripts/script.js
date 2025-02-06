@@ -18,6 +18,10 @@ function closeAllPages() {
 const inputNewContract = document.querySelector('.new-contracts__input')
 const newContractsPage = document.querySelector('.new-contracts-page');
 
+inputNewContract.addEventListener('change', ()=> {
+    openProject.header.name = inputNewContract.value;
+})
+
 let idProject;
 let nameProject;
 let openProject;
@@ -39,29 +43,36 @@ function loadQr(id, name) {
         delete link;
     })
 }
-function parsingProject() {
+const uploadingPhotoCount = document.getElementById('uploadingPhoto');
+
+function parsingProject(callback = null) {
     openProject.parseContent(d => {
         nameProject = d.header.name === "undefined" ? `Новый договор ${idProject}` : d.header.name;
+        d.header.name = nameProject;
         inputNewContract.value = nameProject;
         let content = project.content;
+        console.log(content)
         createFileRow(content);
-
+        
+        uploadingPhotoCount.textContent = project.content.length;
+        newContractsPage.style.display = '';
+        if (callback != null) callback();
+        
     });
 }
+
 function showNewContractsPage(res) {
     idProject = res;
-    closeAllPages()
-    newContractsPage.style.display = '';
+    closeAllPages();
+    
     User.GetProject(idProject, data => {
         header = data;
         User.GetProjectData(idProject, data => {
             scene = data
             project = new Scene(scene, header);
             openProject = project;
-
             parsingProject();
             updateProject();
-            
         });
     });
 
@@ -70,7 +81,6 @@ function showNewContractsPage(res) {
 };
 
 function updateProject() {
-    openProject.header.name = inputNewContract.value;
     User.UpdateProject(openProject, (res) => console.log('update proj', res))
 }
 function hideNewContractsPage() {
@@ -200,3 +210,11 @@ togglePassword.addEventListener('click', () => {
     passwordInput.setAttribute('type', type);
     togglePassword.closest('.label-input').classList.toggle('show-password');
 });
+
+const errBlock = document.querySelector('.error-message_block');
+const errMsg = document.querySelector('.error-message_text');
+function errorMsg(msg) {
+    errMsg.textContent = msg;
+    errBlock.style.display = 'block';
+    setTimeout(()=> errBlock.style.display = 'none',5000)
+}
