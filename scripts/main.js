@@ -62,7 +62,7 @@ function renderProjects(projects, page, itemsPerPage) {
       <td>${project.description === 'undefined' ? '0' : project.description}</td>
       <td><a data-id='${project.id}' onclick="loadQr(${project.id}, '${project.name}')">Скачать QR-код</a></td>
       <div class="btn-group">
-          <div class="btn-basket" onclick="User.DeleteProject(${project.id},this)"></div>
+          <div class="btn-basket" onclick="showPopupDeleteProject(${project.id}, this)"></div>
       </div>
     `;
     projectTableBody.appendChild(row);

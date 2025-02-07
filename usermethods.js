@@ -28,7 +28,7 @@ class User {
                 let projects2 = []
                 for (let i = data.length - 1; i >= 0; i--)
                     projects2.push(data[i])
-                console.log("[GetProjects]", projects2)
+                console.log("[GetProjects]", projects2);
                 initProject(projects2)
 
             })
@@ -48,7 +48,6 @@ class User {
 
     static CreateProject(name, description) {
         let scene = Scene.createScene(name);
-        closeAllPages();
         MixarWebBackendAPI.createProject(name, description, 0)
             .then(res => {
                 console.log("[CreateProject] ID нового проекта:", res);
@@ -67,6 +66,7 @@ class User {
         MixarWebBackendAPI.deleteProject(pid)
             .then(_ => {
                 console.log("[DeleteProject] ok");
+                hidePopupDeleteProject();
                 User.GetProjects();
             })
             .catch(err => console.log("[DeleteProject] error:", err))

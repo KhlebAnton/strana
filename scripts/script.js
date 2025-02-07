@@ -18,21 +18,25 @@ function closeAllPages() {
 const inputNewContract = document.querySelector('.new-contracts__input')
 const newContractsPage = document.querySelector('.new-contracts-page');
 
-inputNewContract.addEventListener('change', ()=> {
-    openProject.header.name = inputNewContract.value;
+inputNewContract.addEventListener('change', () => {
+    if (!newProjectOpen) {
+        openProject.header.name = inputNewContract.value;
+    }
+
 })
 
 let idProject;
 let nameProject;
 let openProject;
 
+let newProjectOpen = false;
 const qrel = document.getElementById('qrel');
 const qrelBtn = document.getElementById('qrel-btn');
-function setLocation(curLoc){
+function setLocation(curLoc) {
     try {
-      history.pushState(null, null, curLoc);
-      return;
-    } catch(e) {}
+        history.pushState(null, null, curLoc);
+        return;
+    } catch (e) { }
     location.hash = '#' + curLoc;
 }
 qrelBtn.addEventListener('click', () => {
@@ -59,24 +63,36 @@ function parsingProject(callback = null) {
         let content = project.content;
         console.log(content)
         createFileRow(content);
-        
+
         uploadingPhotoCount.textContent = project.content.length;
         newContractsPage.style.display = '';
         if (callback != null) callback();
-        
+
     });
 }
 
 const titleNewContract = document.getElementById('title-new-page');
+let reloadNewPage = true;
 function showNewContractsPage(res, newProject = true) {
-    setLocation('contracts')
+    if (!newProject) {
+        setLocation('contracts');
+    };
     titleNewContract.textContent = `
     ${newProject === true ? 'Создание нового договора' : 'Изменение договора'}
     `;
-    
+   
+    newProjectOpen = false;
+    qrelBtn.classList.remove('disabled');
+    countPhotoNewCotract.classList.remove('disabled');
+    fileBlockNewContract.classList.remove('disabled');
+    btnSaveProject.onclick = () => updateProject(true);
     idProject = res;
-    closeAllPages();
-    
+    if (reloadNewPage) {
+        closeAllPages();
+        reloadNewPage = true;
+    }
+
+
     User.GetProject(idProject, data => {
         header = data;
         User.GetProjectData(idProject, data => {
@@ -91,20 +107,39 @@ function showNewContractsPage(res, newProject = true) {
 
 
 };
-const btnSaveProject = document.querySelector('.btn-save-project');
-function updateProject(btnClick= false) {
-    User.UpdateProject(openProject, (res) => 
-        {
-            console.log('update proj', res);
-            if(btnClick) {
-                btnSaveProject.classList.add('saved');
-                btnSaveProject.textContent = 'Сохранено!'
+const countPhotoNewCotract = document.querySelector('.new-contracts__count-files');
+const fileBlockNewContract = document.querySelector('.new-contracts__files-load');
+function openNewContract() {
+    setLocation('contracts')
+    closeAllPages();
+    newProjectOpen = true;
+    inputNewContract.value = 'Новый договор';
+    qrelBtn.classList.add('disabled')
+    countPhotoNewCotract.classList.add('disabled')
+    fileBlockNewContract.classList.add('disabled')
+    newContractsPage.style.display = '';
+    reloadNewPage = false;
+    btnSaveProject.onclick = () => saveNewContract();
 
-                setTimeout(()=> {
-                    btnSaveProject.classList.remove('saved');
-                    btnSaveProject.textContent = 'Сохранить'
-                },3000)
-            }
+}
+function saveNewContract() {
+    let title = inputNewContract.value;
+    User.CreateProject(title, reload = false)
+
+}
+const btnSaveProject = document.querySelector('.btn-save-project');
+function updateProject(btnClick = false) {
+    User.UpdateProject(openProject, (res) => {
+        console.log('update proj', res);
+        if (btnClick) {
+            btnSaveProject.classList.add('saved');
+            btnSaveProject.textContent = 'Сохранено!'
+
+            setTimeout(() => {
+                btnSaveProject.classList.remove('saved');
+                btnSaveProject.textContent = 'Сохранить'
+            }, 3000)
+        }
 
 
     })
@@ -122,6 +157,19 @@ function showAllContractsPage() {
 function hideAllContractsPage() {
     allContractsPage.style.display = 'none';
 };
+///delte project
+const popupDeleteProj = document.querySelector('.popup_delete_project');
+const btnDeleteProject = document.getElementById('btn-delete-project')
+function showPopupDeleteProject(id, elem) {
+    popupDeleteProj.style.display = '';
+    btnDeleteProject.onclick = (e) => User.DeleteProject(id, elem);
+};
+function hidePopupDeleteProject() {
+    popupDeleteProj.style.display = 'none';
+}
+function hidePopupDelete() {
+    popupDelete.style.display = 'none';
+}
 
 // all-user
 const btnUserPage = document.querySelector('.btn_open-users-page');
@@ -242,7 +290,7 @@ const errMsg = document.querySelector('.error-message_text');
 function errorMsg(msg) {
     errMsg.textContent = msg;
     errBlock.style.display = 'block';
-    setTimeout(()=> errBlock.style.display = 'none',5000)
+    setTimeout(() => errBlock.style.display = 'none', 5000)
 }
 
 // аккаунт кнопка
@@ -253,26 +301,27 @@ function toggleDropdown(event) {
     const dropdownMenu = document.getElementById('dropdownMenu');
     dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
     accountBtn.classList.toggle('open')
-  }
-  
-  function hideDropdown() {
+}
+
+function hideDropdown() {
     const dropdownMenu = document.getElementById('dropdownMenu');
     dropdownMenu.style.display = 'none';
     accountBtn.classList.remove('open');
-  }
-  
-  // Закрытие меню при клике вне его области
-  document.addEventListener('click', function(event) {
+}
+
+// Закрытие меню при клике вне его области
+document.addEventListener('click', function (event) {
     const dropdownButton = document.getElementById('dropdownButton');
     const dropdownMenu = document.getElementById('dropdownMenu');
     if (event.target !== dropdownButton && !dropdownMenu.contains(event.target)) {
-      dropdownMenu.style.display = 'none';
-      accountBtn.classList.remove('open');
+        dropdownMenu.style.display = 'none';
+        accountBtn.classList.remove('open');
     }
-  });
-
-  window.addEventListener('popstate', function(event) {
-    
-    location.reload();
-    
 });
+
+window.addEventListener('popstate', function (event) {
+
+    location.reload();
+
+});
+

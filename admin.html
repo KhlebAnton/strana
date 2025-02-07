@@ -14,7 +14,7 @@
             <div class="header__nav">
                 <div class="header__logo"></div>
                 <span class="header__nav_link open_link" onclick="showAllContractsPage()">Все договоры</span>
-                <span class="header__nav_link" onclick="User.CreateProject()">Создать договор</span>
+                <a href="#new"></a><span class="header__nav_link" onclick="openNewContract()">Создать договор</span>
             </div>
             <div class="header__nav_link account_btn" ontouchstart onclick="toggleDropdown(event)">
                 <span>Аккаунт</span>
@@ -36,7 +36,7 @@
             <div class="error-message_block" style="display: none;">
                 <div class="error-message_text">ошибка</div>
             </div>
-            <div class="all-contracts-page">
+            <div class="all-contracts-page" >
                 <p class="page__title">Все договоры</p>
                 <div class="block block_contracts">
                     <div class="search-container">
@@ -79,7 +79,7 @@
                             <button id="qrel-btn" class="primary-btn">Скачать QR-код</button>
                         </div>
                         <div class="new-contracts__count-files">
-                            Загружено: <span id="uploadingPhoto"></span> фото
+                            Загружено: <span id="uploadingPhoto">0</span> фото
                         </div>
                     </div>
                     <div class="new-contracts__files-load">
@@ -151,6 +151,19 @@
                     <button class="primary-btn" onclick="hidePopupDelete()">Отменить</button>
                 </div>
                 <div class="btn-delete" onclick="hidePopupDelete()"></div>
+            </div>
+        </div>
+        <div class="popup popup_delete_project" style="display: none;">
+            <div class="block block_popup">
+                <div class="popup__text">
+                    Вы уверены, что хотите удалить договор?
+                </div>
+                <div class="line-decor"></div>
+                <div class="popup__btn-group">
+                    <button class="primary-btn" id="btn-delete-project">Да</button>
+                    <button class="primary-btn" onclick="hidePopupDeleteProject()">Отменить</button>
+                </div>
+                <div class="btn-delete" onclick="hidePopupDeleteProject()"></div>
             </div>
         </div>
         <div class="popup popup_edit" style="display: none;">
@@ -313,6 +326,7 @@
             </div>
         </div>
         
+        
     </main>
     <div id="qrel" style="display: none;"></div>
 
@@ -331,6 +345,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             User.GetProjects();
+            
             SuperAdmin.GetUsers(res => {
                 if (res != null) {
                     initUsers(res);

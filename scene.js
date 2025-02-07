@@ -253,6 +253,7 @@ class Scene {
      * @returns {object}
      */
     createObject(parentGUID, videoContentId, videoName) {
+        if (typeof videoContentId !== "number") videoContentId = Number.parseInt(videoContentId)
         return {
             "id": GUID.createGUID(this),
             "name": videoName,
@@ -356,6 +357,7 @@ class Scene {
      * @returns {object}
      */
     createMarker(imageContentId, imageName) {
+        if (typeof imageContentId !== "number") imageContentId = Number.parseInt(imageContentId)
         return {
             "id": GUID.createGUID(this),
             "type": 0,
