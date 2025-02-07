@@ -20,13 +20,16 @@ class User {
 
 
     /**
-     * Получение списка проектов
-     */
+   * Получение списка проектов
+   */
     static GetProjects() {
         MixarWebBackendAPI.getProjects()
             .then(data => {
-                console.log("[GetProjects]", data);
-                initProject(data)
+                let projects2 = []
+                for (let i = data.length - 1; i >= 0; i--)
+                    projects2.push(data[i])
+                console.log("[GetProjects]", projects2)
+                initProject(projects2)
 
             })
             .catch(err => {
@@ -34,6 +37,7 @@ class User {
                 showAllContractsPage();
             })
     }
+
 
 
     /**
@@ -121,13 +125,13 @@ class User {
 
 
     /**
-* Загрузка маркера (картинки) на сервер и получение contentId файла для использования в проекте
-@param {string}name - имя
-@param {string}extension - расширение
-@param {number}pid - id проекта
-@param {Blob}blob - бинарные данные файла
-@param {function(number|null)}callback
-*/
+     * Загрузка маркера (картинки) на сервер и получение contentId файла для использования в проекте
+     @param {string}name - имя
+     @param {string}extension - расширение
+     @param {number}pid - id проекта
+     @param {Blob}blob - бинарные данные файла
+     @param {function(number|null)}callback
+     */
     static CreateMarker(name, extension, pid, blob, callback = null) {
         MixarWebBackendAPI.createAsset(name, "image", extension, pid, blob)
             .then(res => {
@@ -162,12 +166,12 @@ class User {
     }
 
     /**
- * Добавление в сцену файлов с сервера
- * @param {Scene}scene
- * @param {number}markerId
- * @param {number}videoId
- * @param {function()}callback
- */
+     * Добавление в сцену файлов с сервера
+     * @param {Scene}scene
+     * @param {number}markerId
+     * @param {number}videoId
+     * @param {function()}callback
+     */
     static CreateSceneObjects(scene, markerId, videoId, callback = null) {
         let marker = { name: "" }
         let video = { name: "" }
@@ -222,14 +226,14 @@ class User {
     }
 
     /**
- * Заменяет объекты в сцене по индексу
- * @param {Scene}scene
- * @param {number}index
- * @param {number}markerId
- * @param {number}videoId
- * @param callback
- * @constructor
- */
+     * Заменяет объекты в сцене по индексу
+     * @param {Scene}scene
+     * @param {number}index
+     * @param {number}markerId
+     * @param {number}videoId
+     * @param callback
+     * @constructor
+     */
     static ReplaceSceneObject(scene, index, markerId, videoId, callback) {
         let marker = { name: "" }
         let video = { name: "" }
@@ -297,7 +301,6 @@ class User {
         this.qrcode.makeCode(`${this.baseURL}?id=${id}`)
         setTimeout(() => callback(element.children[1].src), 1000)
     }
-
 
     static GetCurrentUser(callback) {
         MixarWebBackendAPI.getCurrentUser()

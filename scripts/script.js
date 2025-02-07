@@ -28,7 +28,13 @@ let openProject;
 
 const qrel = document.getElementById('qrel');
 const qrelBtn = document.getElementById('qrel-btn');
-
+function setLocation(curLoc){
+    try {
+      history.pushState(null, null, curLoc);
+      return;
+    } catch(e) {}
+    location.hash = '#' + curLoc;
+}
 qrelBtn.addEventListener('click', () => {
     loadQr(idProject, nameProject)
 });
@@ -63,6 +69,7 @@ function parsingProject(callback = null) {
 
 const titleNewContract = document.getElementById('title-new-page');
 function showNewContractsPage(res, newProject = true) {
+    setLocation('contracts')
     titleNewContract.textContent = `
     ${newProject === true ? 'Создание нового договора' : 'Изменение договора'}
     `;
@@ -123,6 +130,7 @@ btnUserPage.addEventListener('click', () => {
 })
 const allUsersPage = document.querySelector('.all-users-page');
 function showAllUsersPage() {
+    setLocation('users');
     closeAllPages()
     allUsersPage.style.display = '';
 
@@ -262,3 +270,9 @@ function toggleDropdown(event) {
       accountBtn.classList.remove('open');
     }
   });
+
+  window.addEventListener('popstate', function(event) {
+    
+    location.reload();
+    
+});
