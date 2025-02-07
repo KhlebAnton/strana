@@ -934,6 +934,7 @@ td:first-child {
     flex-direction: column;
     gap: 12px;
     position: relative;
+    
 }
 
 .block_popup .btn-delete {
@@ -1155,6 +1156,9 @@ td.delete {
     .block {
         padding: 16px 10px 20px;
     }
+    .block_popup {
+        padding: 38px 22px;
+    }
 }
 @media (max-width:670px) {
     .files-load__header,
@@ -1185,6 +1189,7 @@ td.delete {
     .block {
         padding: 15px 10px;
     }
+    
     .primary-btn {
         width: 100%;
     }
@@ -1246,5 +1251,11 @@ td.delete {
     .block_account {
         width: 100%;
         text-align: start;
+    }
+    .block_popup {
+        padding: 38px 22px;
+    }
+    .popup {
+        padding: 10px;
     }
 }
