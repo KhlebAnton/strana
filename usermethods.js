@@ -58,7 +58,7 @@ class User {
      * Удаление проекта по ID
      * @param {number}pid
      */
-    static DeleteProject(pid,elem) {
+    static DeleteProject(pid, elem) {
         elem.closest('tr').classList.add('delete')
         MixarWebBackendAPI.deleteProject(pid)
             .then(_ => {
@@ -120,14 +120,14 @@ class User {
     }
 
 
-         /**
-     * Загрузка маркера (картинки) на сервер и получение contentId файла для использования в проекте
-     @param {string}name - имя
-     @param {string}extension - расширение
-     @param {number}pid - id проекта
-     @param {Blob}blob - бинарные данные файла
-     @param {function(number|null)}callback
-     */
+    /**
+* Загрузка маркера (картинки) на сервер и получение contentId файла для использования в проекте
+@param {string}name - имя
+@param {string}extension - расширение
+@param {number}pid - id проекта
+@param {Blob}blob - бинарные данные файла
+@param {function(number|null)}callback
+*/
     static CreateMarker(name, extension, pid, blob, callback = null) {
         MixarWebBackendAPI.createAsset(name, "image", extension, pid, blob)
             .then(res => {
@@ -161,56 +161,56 @@ class User {
             })
     }
 
-        /**
-     * Добавление в сцену файлов с сервера
-     * @param {Scene}scene
-     * @param {number}markerId
-     * @param {number}videoId
-     * @param {function()}callback
-     */
-        static CreateSceneObjects(scene, markerId, videoId, callback = null) {
-            let marker = {name: ""}
-            let video = {name: ""}
-            MixarWebBackendAPI.getAsset(markerId)
-                .then(asset => {
-                    marker = asset
-                    MixarWebBackendAPI.getAsset(videoId)
-                        .then(asset => {
-                            video = asset
-                            marker = scene.createMarker(markerId, marker.name)
-                            video = scene.createObject(marker.id, videoId, video.name)
-                            scene.addContent(marker, video)
-                            console.log("[CreateSceneObjects] marker: yes, video: yes")
-                            parsingProject(callback)
-                        })
-                        .catch(err => {
-                            marker = scene.createMarker(markerId, marker.name)
-                            video = scene.createObject(marker.id, videoId, video.name)
-                            scene.addContent(marker, video)
-                            console.log("[CreateSceneObjects] marker:yes, video:no");
-                            parsingProject(callback)
-                        })
-                })
-                .catch(err => {
-                    MixarWebBackendAPI.getAsset(videoId)
-                        .then(asset => {
-                            video = asset
-                            marker = scene.createMarker(markerId, marker.name)
-                            video = scene.createObject(marker.id, videoId, video.name)
-                            scene.addContent(marker, video)
-                            console.log("[CreateSceneObjects] marker:no, video:yes")
-                            parsingProject(callback)
-                        })
-                        .catch(err => {
-                            marker = scene.createMarker(markerId, marker.name)
-                            video = scene.createObject(marker.id, videoId, video.name)
-                            scene.addContent(marker, video)
-                            console.log("[CreateSceneObjects] marker:no, video:no")
-                            parsingProject(callback)
-                        })
-                })
-        }
-    
+    /**
+ * Добавление в сцену файлов с сервера
+ * @param {Scene}scene
+ * @param {number}markerId
+ * @param {number}videoId
+ * @param {function()}callback
+ */
+    static CreateSceneObjects(scene, markerId, videoId, callback = null) {
+        let marker = { name: "" }
+        let video = { name: "" }
+        MixarWebBackendAPI.getAsset(markerId)
+            .then(asset => {
+                marker = asset
+                MixarWebBackendAPI.getAsset(videoId)
+                    .then(asset => {
+                        video = asset
+                        marker = scene.createMarker(markerId, marker.name)
+                        video = scene.createObject(marker.id, videoId, video.name)
+                        scene.addContent(marker, video)
+                        console.log("[CreateSceneObjects] marker: yes, video: yes")
+                        parsingProject(callback)
+                    })
+                    .catch(err => {
+                        marker = scene.createMarker(markerId, marker.name)
+                        video = scene.createObject(marker.id, videoId, video.name)
+                        scene.addContent(marker, video)
+                        console.log("[CreateSceneObjects] marker:yes, video:no");
+                        parsingProject(callback)
+                    })
+            })
+            .catch(err => {
+                MixarWebBackendAPI.getAsset(videoId)
+                    .then(asset => {
+                        video = asset
+                        marker = scene.createMarker(markerId, marker.name)
+                        video = scene.createObject(marker.id, videoId, video.name)
+                        scene.addContent(marker, video)
+                        console.log("[CreateSceneObjects] marker:no, video:yes")
+                        parsingProject(callback)
+                    })
+                    .catch(err => {
+                        marker = scene.createMarker(markerId, marker.name)
+                        video = scene.createObject(marker.id, videoId, video.name)
+                        scene.addContent(marker, video)
+                        console.log("[CreateSceneObjects] marker:no, video:no")
+                        parsingProject(callback)
+                    })
+            })
+    }
+
     /**
      * Удаление из проекта пары маркер+видео
      * @param {Scene}scene
@@ -221,59 +221,59 @@ class User {
 
     }
 
-        /**
-     * Заменяет объекты в сцене по индексу
-     * @param {Scene}scene
-     * @param {number}index
-     * @param {number}markerId
-     * @param {number}videoId
-     * @param callback
-     * @constructor
-     */
-        static ReplaceSceneObject(scene, index, markerId, videoId, callback) {
-            let marker = {name: ""}
-            let video = {name: ""}
-            MixarWebBackendAPI.getAsset(markerId)
-                .then(asset => {
-                    marker = asset
-                    MixarWebBackendAPI.getAsset(videoId)
-                        .then(asset => {
-                            video = asset
-                            marker = scene.createMarker(markerId, marker.name)
-                            video = scene.createObject(marker.id, videoId, video.name)
-                            scene.replaceContent(index, marker, video)
-                            console.log("[ReplaceSceneObject] marker: yes, video: yes")
-                            parsingProject(callback)
-                        })
-                        .catch(err => {
-                            marker = scene.createMarker(markerId, marker.name)
-                            video = scene.createObject(marker.id, videoId, video.name)
-                            scene.replaceContent(index, marker, video)
-                            console.log("[ReplaceSceneObject] marker:yes, video:no")
-                            parsingProject(callback)
-                        })
-                })
-                .catch(err => {
-                    MixarWebBackendAPI.getAsset(videoId)
-                        .then(asset => {
-                            video = asset
-                            marker = scene.createMarker(markerId, marker.name)
-                            video = scene.createObject(marker.id, videoId, video.name)
-                            scene.replaceContent(index, marker, video)
-                            console.log("[ReplaceSceneObject] marker:no, video:yes")
-                            parsingProject(callback)
-                        })
-                        .catch(err => {
-                            marker = scene.createMarker(markerId, marker.name)
-                            video = scene.createObject(marker.id, videoId, video.name)
-                            scene.replaceContent(index, marker, video)
-                            console.log("[ReplaceSceneObject] marker:no, video:no")
-                            parsingProject(callback)
-                        })
-                })
-        }
-    
-    static baseURL = "https://dummy.org/"
+    /**
+ * Заменяет объекты в сцене по индексу
+ * @param {Scene}scene
+ * @param {number}index
+ * @param {number}markerId
+ * @param {number}videoId
+ * @param callback
+ * @constructor
+ */
+    static ReplaceSceneObject(scene, index, markerId, videoId, callback) {
+        let marker = { name: "" }
+        let video = { name: "" }
+        MixarWebBackendAPI.getAsset(markerId)
+            .then(asset => {
+                marker = asset
+                MixarWebBackendAPI.getAsset(videoId)
+                    .then(asset => {
+                        video = asset
+                        marker = scene.createMarker(markerId, marker.name)
+                        video = scene.createObject(marker.id, videoId, video.name)
+                        scene.replaceContent(index, marker, video)
+                        console.log("[ReplaceSceneObject] marker: yes, video: yes")
+                        parsingProject(callback)
+                    })
+                    .catch(err => {
+                        marker = scene.createMarker(markerId, marker.name)
+                        video = scene.createObject(marker.id, videoId, video.name)
+                        scene.replaceContent(index, marker, video)
+                        console.log("[ReplaceSceneObject] marker:yes, video:no")
+                        parsingProject(callback)
+                    })
+            })
+            .catch(err => {
+                MixarWebBackendAPI.getAsset(videoId)
+                    .then(asset => {
+                        video = asset
+                        marker = scene.createMarker(markerId, marker.name)
+                        video = scene.createObject(marker.id, videoId, video.name)
+                        scene.replaceContent(index, marker, video)
+                        console.log("[ReplaceSceneObject] marker:no, video:yes")
+                        parsingProject(callback)
+                    })
+                    .catch(err => {
+                        marker = scene.createMarker(markerId, marker.name)
+                        video = scene.createObject(marker.id, videoId, video.name)
+                        scene.replaceContent(index, marker, video)
+                        console.log("[ReplaceSceneObject] marker:no, video:no")
+                        parsingProject(callback)
+                    })
+            })
+    }
+
+    static baseURL = "https://dummy.org"
     static qrcode = null
 
     /**
@@ -294,9 +294,10 @@ class User {
             })
         }
         this.qrcode.clear()
-        this.qrcode.makeCode(`${this.baseURL}${id}`)
+        this.qrcode.makeCode(`${this.baseURL}?id=${id}`)
         setTimeout(() => callback(element.children[1].src), 1000)
     }
+
 
     static GetCurrentUser(callback) {
         MixarWebBackendAPI.getCurrentUser()

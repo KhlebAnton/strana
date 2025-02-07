@@ -210,8 +210,12 @@ input:hover {
     text-decoration-color: #ffb236;
 }
 
-.account_btn:hover span {
+.account_btn.open span {
     font-weight: 800;
+    text-decoration: underline;
+    -webkit-text-decoration-color: #ffb236;
+    text-decoration-color: #ffb236;
+    
 }
 
 /* .account_btn:hover .block_account {

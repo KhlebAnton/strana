@@ -238,15 +238,19 @@ function errorMsg(msg) {
 }
 
 // аккаунт кнопка
+const accountBtn = document.querySelector('.account_btn');
+
 function toggleDropdown(event) {
     event.stopPropagation(); // Останавливаем всплытие события, чтобы не сработал document.click
     const dropdownMenu = document.getElementById('dropdownMenu');
     dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+    accountBtn.classList.toggle('open')
   }
   
   function hideDropdown() {
     const dropdownMenu = document.getElementById('dropdownMenu');
     dropdownMenu.style.display = 'none';
+    accountBtn.classList.remove('open');
   }
   
   // Закрытие меню при клике вне его области
@@ -255,5 +259,6 @@ function toggleDropdown(event) {
     const dropdownMenu = document.getElementById('dropdownMenu');
     if (event.target !== dropdownButton && !dropdownMenu.contains(event.target)) {
       dropdownMenu.style.display = 'none';
+      accountBtn.classList.remove('open');
     }
   });
