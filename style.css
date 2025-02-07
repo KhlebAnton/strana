@@ -214,9 +214,9 @@ input:hover {
     font-weight: 800;
 }
 
-.account_btn:hover .block_account {
+/* .account_btn:hover .block_account {
     display: block;
-}
+} */
 
 .account_btn {
     position: relative;
@@ -764,6 +764,11 @@ td:first-child {
     display: none;
     gap: 2px;
 }
+.btn-save-project.saved {
+   background-color: #FFB236;
+   pointer-events: none;
+
+}
 
 .file-input-wrapper {
     position: relative;
@@ -1168,9 +1173,6 @@ td.delete {
     }
 }
 @media (max-width:550px) {
-    .header__logo {
-        max-width: 80px;
-    }
     .header__nav {
         gap: 10px;
     }
@@ -1219,5 +1221,30 @@ td.delete {
     }
     .new-contracts-table_wrapper {
         overflow-x: auto;
+    }
+    .header .container {
+        align-items: stretch;
+        justify-content: space-between;
+        gap: 10px;
+        flex-direction: column-reverse;
+    }
+    .header {
+        padding: 10px 0;
+        text-align: center;
+    }
+    .header__nav {
+        justify-content: space-between;
+        
+    }
+    .header__nav > * {
+        max-width: 115px;
+        width: 100%;
+    }
+    .account_btn {
+        padding: 10px;
+    }
+    .block_account {
+        width: 100%;
+        text-align: start;
     }
 }

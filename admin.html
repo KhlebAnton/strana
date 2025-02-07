@@ -16,9 +16,9 @@
                 <span class="header__nav_link open_link" onclick="showAllContractsPage()">Все договоры</span>
                 <span class="header__nav_link" onclick="User.CreateProject()">Создать договор</span>
             </div>
-            <div class="header__nav_link account_btn" ontouchstart>
+            <div class="header__nav_link account_btn" ontouchstart onclick="toggleDropdown(event)">
                 <span>Аккаунт</span>
-                <div class="block block_account">
+                <div id="dropdownMenu" class="block block_account">
                     <p class="user-mail__title">Вы вошли как:</p>
                     <p id="name-user" class="user-mail">email@gmail.com</p>
                     <button id="adminBtn" style="display: none;" class="primary-btn btn_open-users-page">Управление
@@ -75,7 +75,7 @@
                     <div class="new-contracts__header">
                         <div class="new-contracts__inputs-wrapper">
                             <input class="new-contracts__input" type="text" placeholder="Номер договора или проекта">
-                            <button class="primary-btn" onclick="updateProject()">Сохранить</button>
+                            <button class="primary-btn btn-save-project" onclick="updateProject(true)">Сохранить</button>
                             <button id="qrel-btn" class="primary-btn">Скачать QR-код</button>
                         </div>
                         <div class="new-contracts__count-files">
@@ -191,7 +191,7 @@
                     </label>
                     <label class="label-input" for="password">
                         <p class="label-input__title">Пароль</p>
-                        <input type="text" id="password" name="password" required>
+                        <input type="text" id="password" name="password" placeholder="Введите новый пароль">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <mask id="mask0_82_1006" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
                                 width="24" height="24">

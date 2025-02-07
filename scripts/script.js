@@ -84,9 +84,23 @@ function showNewContractsPage(res, newProject = true) {
 
 
 };
+const btnSaveProject = document.querySelector('.btn-save-project');
+function updateProject(btnClick= false) {
+    User.UpdateProject(openProject, (res) => 
+        {
+            console.log('update proj', res);
+            if(btnClick) {
+                btnSaveProject.classList.add('saved');
+                btnSaveProject.textContent = 'Сохранено!'
 
-function updateProject() {
-    User.UpdateProject(openProject, (res) => console.log('update proj', res))
+                setTimeout(()=> {
+                    btnSaveProject.classList.remove('saved');
+                    btnSaveProject.textContent = 'Сохранить'
+                },3000)
+            }
+
+
+    })
 }
 function hideNewContractsPage() {
     newContractsPage.style.display = 'none';
@@ -139,12 +153,11 @@ const popupEditRoles = popupEdit.querySelectorAll('input[name="role"]');
 const popupEditPassword = popupEdit.querySelector('input[name="password"]')
 
 let userEditId;
-function showPopupEdit(name, email, roleName, password, id) {
+function showPopupEdit(name, email, roleName, id) {
     userEditId = id;
     popupEdit.style.display = '';
     popupEditName.value = name;
     popupEditEmail.value = email;
-    popupEditPassword.value = password;
     popupEditRoles.forEach((role) => {
         role.checked = false;
         if (roleName === '0' && role.getAttribute('data-role') === 'пользователь') {
@@ -223,3 +236,24 @@ function errorMsg(msg) {
     errBlock.style.display = 'block';
     setTimeout(()=> errBlock.style.display = 'none',5000)
 }
+
+// аккаунт кнопка
+function toggleDropdown(event) {
+    event.stopPropagation(); // Останавливаем всплытие события, чтобы не сработал document.click
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+  }
+  
+  function hideDropdown() {
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    dropdownMenu.style.display = 'none';
+  }
+  
+  // Закрытие меню при клике вне его области
+  document.addEventListener('click', function(event) {
+    const dropdownButton = document.getElementById('dropdownButton');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    if (event.target !== dropdownButton && !dropdownMenu.contains(event.target)) {
+      dropdownMenu.style.display = 'none';
+    }
+  });
