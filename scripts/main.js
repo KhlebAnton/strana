@@ -162,9 +162,17 @@ function renderUsers(users, page, itemsPerPage) {
     if (!user.deleted) {
       const row = document.createElement('tr');
       row.innerHTML = `
-        <td>${user.name} ${user.surname}</td>
+        <td>
+          <div class="table-user__name">
+            ${user.name} ${user.surname}
+          </div>
+        </td>
         
-        <td>${user.email}</td>
+        <td>
+          <div class="table-user__email">
+            ${user.email}
+          </div>
+        </td>
         <td>
         
         <span class="${user.role === 0 ? 'role_user' : 'role_admin'}">${user.role === 0 ? 'пользователь' : 'администратор'}</span>

@@ -797,7 +797,13 @@ td:first-child {
     background: inherit;
 
 }
-
+.table-user__name,
+.table-user__email {
+    max-width: 130px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+}
 .user-table-body th,
 .user-table-body td {
     padding: 5px 0;
@@ -845,6 +851,7 @@ td:first-child {
     border-radius: 0 100px 100px 0;
     text-align: center;
     padding-right: 10px;
+    padding-left: 10px;
 }
 
 .user-table-body .btn-delete {
@@ -1065,21 +1072,7 @@ table {
     min-width: auto;
 }
 
-@media (max-width:700px) {
-    .project-table__header th:first-child {
-        padding-left: 20px;
-        width: 30%;
-    }
 
-    table {
-        min-width: 600px;
-    }
-
-    .user-table__header th:first-child {
-        padding-left: 20px;
-        width: 30%;
-    }
-}
 
 td.uploading {
    animation: uploading 1s infinite alternate-reverse ease-in-out;
@@ -1119,5 +1112,111 @@ td.delete {
     from {
         transform: translateY(0);
         opacity: 0;
+    }
+}
+.mobile {
+    display: none;
+}
+@media (max-width:850px) {
+    .new-contracts__header {
+        align-items: flex-start;
+        flex-direction: column-reverse;
+        gap: 10px;
+    }
+    .new-contracts__inputs-wrapper {
+        width: 100%;
+    }
+    .new-contracts__count-files {
+        text-align: end;
+        width: 100%;
+    }
+    
+}
+@media (max-width:775px) {
+    .project-table {
+        padding-right: 0;
+        min-width: 630px;
+    }
+    .project-table__header th:first-child {
+        width: auto;
+    }
+    .user-table__header th:first-child {
+        width: auto;
+    }
+    .project-name-title {
+        max-width: 150px;
+    }
+    .block {
+        padding: 16px 10px 20px;
+    }
+}
+@media (max-width:670px) {
+    .files-load__header,
+    .new-contracts__inputs-wrapper {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    .new-contracts__input {
+        grid-column: 1 / 3;
+        max-width: none;
+    }
+    .files-load__header .primary-btn,
+    .new-contracts__header .primary-btn {
+        width: 100%;
+    }
+}
+@media (max-width:550px) {
+    .header__logo {
+        max-width: 80px;
+    }
+    .header__nav {
+        gap: 10px;
+    }
+}
+@media (max-width:500px) {
+    .block_login {
+        max-width: none;
+        padding: 15px 10px;
+    }
+    .block {
+        padding: 15px 10px;
+    }
+    .primary-btn {
+        width: 100%;
+    }
+    .search-container{
+        flex-direction: column;
+    }
+    .input-wrapper {
+        max-width: none;
+    }
+    .project-name-wrapper {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-direction: column;
+    }
+    .files-load__header,
+    .new-contracts__inputs-wrapper {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    .new-contracts__input {
+        grid-column: 1 ;
+
+    }
+    .file-input-wrapper {
+        max-width: 150px;
+    }
+    .new-contracts-table {
+        padding-right: 0;
+    }
+    .new-contracts-table {
+        min-width: 390px;
+    }
+    .new-contracts-table_wrapper {
+        overflow-x: auto;
     }
 }
