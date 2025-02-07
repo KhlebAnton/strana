@@ -61,7 +61,12 @@ function parsingProject(callback = null) {
     });
 }
 
-function showNewContractsPage(res) {
+const titleNewContract = document.getElementById('title-new-page');
+function showNewContractsPage(res, newProject = true) {
+    titleNewContract.textContent = `
+    ${newProject === true ? 'Создание нового договора' : 'Изменение договора'}
+    `;
+    
     idProject = res;
     closeAllPages();
     

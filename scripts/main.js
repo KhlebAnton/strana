@@ -54,7 +54,7 @@ function renderProjects(projects, page, itemsPerPage) {
         <div class="project-name-wrapper">
           <span class="project-name-title">${project.name}</span> 
           <div class="bubble-full-name">${project.name}</div>
-          <a data-id='${project.id}' onclick="showNewContractsPage(${project.id})">Изменить</a>
+          <a data-id='${project.id}' onclick="showNewContractsPage(${project.id}, false)">Изменить</a>
         </div>
       </td>
       
