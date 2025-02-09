@@ -8,8 +8,12 @@ function closeAllPages() {
     inputNewContract.value = '';
     tableBody.innerHTML = '';
 }
-function setUrlParam(param) {
+function setUrlParam(param, id = null) {
     const url = new URL(window.location.href);
+    url.searchParams.delete('id');
+    if(id) {
+        url.searchParams.set('id', id);
+    }
     url.searchParams.set('tab', param);
     window.location.href = url.toString();
 }

@@ -375,6 +375,9 @@
                 case 'new':
                     openNewContract();
                     break;
+                case 'edit':
+                    showNewContractsPage(urlParams.get('id'), false)
+                    break;
 
                 default:
                     User.GetProjects();
@@ -389,10 +392,10 @@
                 if (tabValue === btn.getAttribute('data-link')) {
                     btn.classList.add('open_link');
                 }
-                if(!tabValue) {
+                if (!tabValue) {
                     navBtns[0].classList.add('open_link');
                 }
-                    
+
             });
         });
     </script>
