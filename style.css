@@ -234,6 +234,7 @@ input:hover {
     -webkit-text-decoration-color: #ffb236;
     text-decoration-color: #ffb236;
     font-weight: 800;
+    pointer-events: none;
 }
 
 .header .container {
@@ -266,6 +267,9 @@ input:hover {
 }
 .block_account .user-mail {
     margin-bottom: 18px;
+    text-wrap: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .user-mail__title {
     padding: 4px 0;
@@ -387,6 +391,9 @@ input:hover {
     overflow: hidden;
     text-overflow: ellipsis;
     position: relative;
+}
+.project-name-title_id {
+    opacity: 0.8;
 }
 .project-name-title:hover + .bubble-full-name{
     opacity: 1;

@@ -1,11 +1,5 @@
-// nav btns
-const navBtns = document.querySelector('.header__nav').querySelectorAll('.header__nav_link');
-navBtns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-        navBtns.forEach((btn) => btn.classList.remove('open_link'))
-        btn.classList.add('open_link');
-    });
-})
+
+
 function closeAllPages() {
     hideAllContractsPage();
     hideAllUsersPage();
@@ -14,6 +8,12 @@ function closeAllPages() {
     inputNewContract.value = '';
     tableBody.innerHTML = '';
 }
+function setUrlParam(param) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('tab', param);
+    window.location.href = url.toString();
+}
+
 // new-contracts
 const inputNewContract = document.querySelector('.new-contracts__input')
 const newContractsPage = document.querySelector('.new-contracts-page');
@@ -32,13 +32,7 @@ let openProject;
 let newProjectOpen = false;
 const qrel = document.getElementById('qrel');
 const qrelBtn = document.getElementById('qrel-btn');
-function setLocation(curLoc) {
-    try {
-        history.pushState(null, null, curLoc);
-        return;
-    } catch (e) { }
-    location.hash = '#' + curLoc;
-}
+
 qrelBtn.addEventListener('click', () => {
     loadQr(idProject, nameProject)
 });
@@ -74,9 +68,6 @@ function parsingProject(callback = null) {
 const titleNewContract = document.getElementById('title-new-page');
 let reloadNewPage = true;
 function showNewContractsPage(res, newProject = true) {
-    if (!newProject) {
-        setLocation('contracts');
-    };
     titleNewContract.textContent = `
     ${newProject === true ? 'Создание нового договора' : 'Изменение договора'}
     `;
@@ -110,7 +101,6 @@ function showNewContractsPage(res, newProject = true) {
 const countPhotoNewCotract = document.querySelector('.new-contracts__count-files');
 const fileBlockNewContract = document.querySelector('.new-contracts__files-load');
 function openNewContract() {
-    setLocation('contracts')
     closeAllPages();
     newProjectOpen = true;
     inputNewContract.value = 'Новый договор';
@@ -174,11 +164,10 @@ function hidePopupDelete() {
 // all-user
 const btnUserPage = document.querySelector('.btn_open-users-page');
 btnUserPage.addEventListener('click', () => {
-    showAllUsersPage();
+    setUrlParam('user');
 })
 const allUsersPage = document.querySelector('.all-users-page');
 function showAllUsersPage() {
-    setLocation('users');
     closeAllPages()
     allUsersPage.style.display = '';
 

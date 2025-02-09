@@ -262,9 +262,13 @@ class MixarWebBackendAPI {
                 .then(response => {
                     response.text()
                         .then(text => {
-                            this.token = text
-                            Cookie.setCookie("token", this.token, 4)
-                            resolve()
+                            if (text[0] != '{') {
+                                this.token = text
+                                Cookie.setCookie("token", this.token, 4)
+                                resolve()
+                            }
+                            else
+                                reject()
                         })
                         .catch(reject)
                 })

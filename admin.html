@@ -13,10 +13,10 @@
         <div class="container">
             <div class="header__nav">
                 <div class="header__logo"></div>
-                <span class="header__nav_link open_link" onclick="showAllContractsPage()">Все договоры</span>
-                <a href="#new"></a><span class="header__nav_link" onclick="openNewContract()">Создать договор</span>
+                <span class="header__nav_link" data-link="list" onclick="setUrlParam('list')">Все договоры</span>
+                <span class="header__nav_link" data-link="new" onclick="setUrlParam('new')">Создать договор</span>
             </div>
-            <div class="header__nav_link account_btn" ontouchstart onclick="toggleDropdown(event)">
+            <div class="header__nav_link account_btn" data-link="user" ontouchstart onclick="toggleDropdown(event)">
                 <span>Аккаунт</span>
                 <div id="dropdownMenu" class="block block_account">
                     <p class="user-mail__title">Вы вошли как:</p>
@@ -36,7 +36,7 @@
             <div class="error-message_block" style="display: none;">
                 <div class="error-message_text">ошибка</div>
             </div>
-            <div class="all-contracts-page" >
+            <div class="all-contracts-page">
                 <p class="page__title">Все договоры</p>
                 <div class="block block_contracts">
                     <div class="search-container">
@@ -75,7 +75,8 @@
                     <div class="new-contracts__header">
                         <div class="new-contracts__inputs-wrapper">
                             <input class="new-contracts__input" type="text" placeholder="Номер договора или проекта">
-                            <button class="primary-btn btn-save-project" onclick="updateProject(true)">Сохранить</button>
+                            <button class="primary-btn btn-save-project"
+                                onclick="updateProject(true)">Сохранить</button>
                             <button id="qrel-btn" class="primary-btn">Скачать QR-код</button>
                         </div>
                         <div class="new-contracts__count-files">
@@ -84,12 +85,12 @@
                     </div>
                     <div class="new-contracts__files-load">
                         <div class="files-load__header">
-                           
-                                <input type="file" id="batch-input" multiple accept=".jpg,.jpeg,.png,.mp4"
+
+                            <input type="file" id="batch-input" multiple accept=".jpg,.jpeg,.png,.mp4"
                                 style="display:none;">
-                                <button class="primary-btn batch-upload">Пакетная загрузка</button>
-                            
-                            
+                            <button class="primary-btn batch-upload">Пакетная загрузка</button>
+
+
                             <button class="primary-btn add-photo"
                                 onclick="User.CreateSceneObjects(openProject, -1, -1);">Добавить фото</button>
                         </div>
@@ -98,7 +99,7 @@
                         </div>
                         <div class="new-contracts-table_wrapper">
                             <table class="new-contracts-table">
-                            
+
                                 <thead class="new-contracts-table__header">
                                     <tr>
                                         <th>Фото</th>
@@ -107,11 +108,11 @@
                                     </tr>
                                 </thead>
                                 <tbody class="new-contracts-table-body">
-    
+
                                 </tbody>
                             </table>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -325,8 +326,8 @@
                 <div class="btn-delete" onclick="hidePopupAdd()"></div>
             </div>
         </div>
-        
-        
+
+
     </main>
     <div id="qrel" style="display: none;"></div>
 
@@ -344,8 +345,8 @@
     <script src="./scripts/script.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            User.GetProjects();
-            
+
+
             SuperAdmin.GetUsers(res => {
                 if (res != null) {
                     initUsers(res);
@@ -355,11 +356,44 @@
                     document.getElementById('adminBtn').style.display = 'none';
                 }
             });
-            User.GetCurrentUser(user=> {
-                let name = user.name;
+            User.GetCurrentUser(user => {
+                let name = `${user.email.indexOf('@') !== -1 ? user.email : 'SuperAdmin'}`;
                 document.getElementById('name-user').textContent = name;
             })
 
+            const urlParams = new URLSearchParams(window.location.search);
+
+            const tabValue = urlParams.get('tab');
+            switch (tabValue) {
+                case 'list':
+                    User.GetProjects();
+                    showAllContractsPage();
+                    break;
+                case 'user':
+                    showAllUsersPage();
+                    break;
+                case 'new':
+                    openNewContract();
+                    break;
+
+                default:
+                    User.GetProjects();
+                    showAllContractsPage();
+                    break;
+            }
+
+            // nav btns
+            const navBtns = document.querySelector('.header__nav').querySelectorAll('.header__nav_link');
+            navBtns.forEach((btn) => btn.classList.remove('open_link'));
+            navBtns.forEach((btn) => {
+                if (tabValue === btn.getAttribute('data-link')) {
+                    btn.classList.add('open_link');
+                }
+                if(!tabValue) {
+                    navBtns[0].classList.add('open_link');
+                }
+                    
+            });
         });
     </script>
 </body>

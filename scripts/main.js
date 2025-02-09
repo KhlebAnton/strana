@@ -52,7 +52,8 @@ function renderProjects(projects, page, itemsPerPage) {
     row.innerHTML = `
       <td>
         <div class="project-name-wrapper">
-          <span class="project-name-title">${project.name}</span> 
+          <span class="project-name-title">${project.name}  <sup class="project-name-title_id">№${project.id}</sup></span> 
+          
           <div class="bubble-full-name">${project.name}</div>
           <a data-id='${project.id}' onclick="showNewContractsPage(${project.id}, false)">Изменить</a>
         </div>
