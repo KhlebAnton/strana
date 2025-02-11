@@ -174,8 +174,6 @@ const allUsersPage = document.querySelector('.all-users-page');
 function showAllUsersPage() {
     closeAllPages()
     allUsersPage.style.display = '';
-
-    navBtns.forEach((btn) => btn.classList.remove('open_link'));
 };
 function hideAllUsersPage() {
     allUsersPage.style.display = 'none';

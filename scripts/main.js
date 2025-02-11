@@ -387,11 +387,11 @@ function loadFile(name, url) {
 
 function deleteVideo(sceneIndex, elem) {
   elem.closest('td').classList.add('delete');
-  User.ReplaceSceneObject(openProject, sceneIndex, openProject.content[sceneIndex].image.id, -1);
+  User.ReplaceSceneObject(openProject, sceneIndex, openProject.content[sceneIndex].image.id, -1, ()=> console.log('video delete'));
 };
 function deleteImage(sceneIndex, elem) {
   elem.closest('td').classList.add('delete');
-  User.ReplaceSceneObject(openProject, sceneIndex, -1, openProject.content[sceneIndex].video.id);
+  User.ReplaceSceneObject(openProject, sceneIndex, -1, openProject.content[sceneIndex].video.id, ()=> console.log('image delete'));
 }
 let sceneId;
 // Обработчик загрузки файла
@@ -442,11 +442,11 @@ function fileSend(file, callback) {
 
 // Сохраняем ID файла для дальнейшего использования
 function saveFileIdImage(sceneIndex, fileId) {
-  User.ReplaceSceneObject(openProject, sceneIndex, fileId, openProject.content[sceneIndex].video.id);
+  User.ReplaceSceneObject(openProject, sceneIndex, fileId, openProject.content[sceneIndex].video.id, ()=> console.log('image add'));
 }
 
 function saveFileIdVideo(sceneIndex, fileId) {
-  User.ReplaceSceneObject(openProject, sceneIndex, openProject.content[sceneIndex].image.id, fileId);
+  User.ReplaceSceneObject(openProject, sceneIndex, openProject.content[sceneIndex].image.id, fileId, ()=> console.log('video add'));
 }
 
 function clearScene(index) {
@@ -547,7 +547,8 @@ function batchUpload(event) {
 
   function UploadPairs() {
     batchLoadAnim.style.display = 'flex';
-    UploadPair(newList, 0)
+    UploadPair(newList, 0);
+    batchInput.value= '';
   }
   
   UploadPairs();

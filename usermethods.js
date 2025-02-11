@@ -247,7 +247,13 @@ class User {
                         video = scene.createObject(marker.id, videoId, video.name)
                         scene.replaceContent(index, marker, video)
                         console.log("[ReplaceSceneObject] marker: yes, video: yes")
-                        parsingProject(callback)
+                        parsingProject(() => {
+                            this.SetVideoAspect(scene, index, () => {
+                                if (callback != null) callback()
+                            })
+                        })
+
+
                     })
                     .catch(err => {
                         marker = scene.createMarker(markerId, marker.name)
@@ -276,6 +282,7 @@ class User {
                     })
             })
     }
+
 
     static baseURL = "https://dummy.org"
     static qrcode = null
@@ -311,5 +318,65 @@ class User {
                 console.log("[GetCurrentUser] error:", err)
                 callback(null)
             })
+    }
+    /**
+     *
+     * @param {number}id
+     * @param {function(Object)}callback
+     * @constructor
+     */
+    static GetMediaInfo(id, callback) {
+        MixarWebBackendAPI.getMediaInfo(id)
+            .then(info => callback(info))
+            .catch(err => callback(null))
+    }
+
+    static calcAspect(info, info2) {
+        let iaspect = info.width / info.height
+        let vvaspect = info2.width / info2.height
+        let hnorm = { width: 1.0, height: info2.height / info2.width }
+        let vnorm = { width: info2.width / info2.height, height: 1.0 }
+
+        if (iaspect > 1) {
+            if (vvaspect > 1) {
+                if (vvaspect > iaspect) return hnorm
+                else return vnorm
+            } else {
+                return vnorm
+            }
+        } else {
+            if (vvaspect > 1) {
+                return hnorm
+            } else {
+                if (vvaspect < iaspect) return hnorm
+                else return vnorm
+            }
+        }
+    }
+
+    /**
+     *
+     * @param {Scene}scene
+     * @param {number}index
+     * @param {function()}callback
+     */
+    static SetVideoAspect(scene, index, callback = null) {
+
+        let imageid = scene.content[index].image.id
+        let videoid = scene.content[index].video.id
+        this.GetMediaInfo(imageid, info => {
+            if (info != null)
+                this.GetMediaInfo(videoid, info2 => {
+                    if (info2 != null) {
+                        let vaspect = this.calcAspect(info, info2)
+                        let video = scene.project.scenes[0].objects.filter(t => {
+                            return t.video.contentId === videoid
+                        })
+                        video[0].transform.scale = { x: vaspect.width, y: vaspect.height, z: 1 }
+                        if (callback != null) callback()
+                    } else if (callback != null) callback()
+                })
+            else if (callback != null) callback()
+        })
     }
 }

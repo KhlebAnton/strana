@@ -266,8 +266,7 @@ class MixarWebBackendAPI {
                                 this.token = text
                                 Cookie.setCookie("token", this.token, 4)
                                 resolve()
-                            }
-                            else
+                            } else
                                 reject()
                         })
                         .catch(reject)
@@ -394,6 +393,25 @@ class MixarWebBackendAPI {
                             else
                                 reject(json)
                         }).catch(reject)
+                })
+                .catch(reject)
+        })
+    }
+
+    static getMediaInfo(id) {
+        return new Promise((resolve, reject) => {
+            fetch(`${this.apiUrl}/asset/${id}/info`, {
+                method: 'GET',
+            })
+                .then(response => {
+                    response.json()
+                        .then(json => {
+                            if (!json.status || json.status === 200)
+                                resolve(json)
+                            else
+                                reject(json)
+                        })
+                        .catch(reject)
                 })
                 .catch(reject)
         })
