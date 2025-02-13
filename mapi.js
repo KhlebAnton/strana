@@ -95,7 +95,8 @@ class MixarWebBackendAPI {
     static deleteAsset(id) {
         return new Promise((resolve, reject) => {
             fetch(`${this.apiUrl}/asset/${id}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers: this.getHeaders(),
             })
                 .then(response => resolve())
                 .catch(reject)

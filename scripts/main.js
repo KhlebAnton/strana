@@ -29,7 +29,7 @@ function updateDisplayProject(projects) {
 // project render
 const projectTableBody = document.getElementById('projectTableBody');
 
-const itemsProjPage = 3;
+const itemsProjPage = 20;
 let currentPageProj = 1;
 
 function renderProjects(projects, page, itemsPerPage) {
@@ -52,14 +52,12 @@ function renderProjects(projects, page, itemsPerPage) {
     row.innerHTML = `
       <td>
         <div class="project-name-wrapper">
-          <span class="project-name-title">${project.name}  <sup class="project-name-title_id">№${project.id}</sup></span> 
-          
-          <div class="bubble-full-name">${project.name}</div>
+          <span class="project-name-title">${project.name}</span> 
           <a data-id='${project.id}' onclick="setUrlParam('edit',${project.id})">Изменить</a>
         </div>
       </td>
       
-      <td>${date.days}.${date.months}.${date.year}</td>
+      <td>${date.days < 10 ? 0 : ''}${date.days}.${date.months < 10 ? 0 : ''}${date.months}.${date.year}</td>
       <td>${project.description === 'undefined' ? '0' : project.description}</td>
       <td><a data-id='${project.id}' onclick="loadQr(${project.id}, '${project.name}')">Скачать QR-код</a></td>
       <div class="btn-group">

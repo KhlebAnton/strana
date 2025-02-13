@@ -8,9 +8,9 @@ class User {
     static Auth(email, pass, callback) {
         MixarWebBackendAPI.authenticateUser(email, pass)
             .then(data => {
-                console.log("[SignIn] ok")
-                callback(true)
-            }
+                    console.log("[SignIn] ok")
+                    callback(true)
+                }
             )
             .catch(err => {
                 console.log("[SignIn] error:", err)
@@ -20,8 +20,8 @@ class User {
 
 
     /**
-   * Получение списка проектов
-   */
+     * Получение списка проектов
+     */
     static GetProjects() {
         MixarWebBackendAPI.getProjects()
             .then(data => {
@@ -37,7 +37,6 @@ class User {
                 showAllContractsPage();
             })
     }
-
 
 
     /**
@@ -63,13 +62,26 @@ class User {
      */
     static DeleteProject(pid, elem) {
         elem.closest('tr').classList.add('delete')
-        MixarWebBackendAPI.deleteProject(pid)
-            .then(_ => {
-                console.log("[DeleteProject] ok");
-                hidePopupDeleteProject();
-                User.GetProjects();
+        User.GetProjectData(pid, data => {
+            let p = new Scene(data, {id: pid})
+            p.parseContent(scene => {
+                for (const cel of p.content) {
+                    MixarWebBackendAPI.deleteAsset(cel.image.id).then(_ => {
+                    }).catch(_ => {
+                    })
+                    MixarWebBackendAPI.deleteAsset(cel.video.id).then(_ => {
+                    }).catch(_ => {
+                    })
+                }
+                MixarWebBackendAPI.deleteProject(pid)
+                    .then(_ => {
+                        console.log("[DeleteProject] ok");
+                        hidePopupDeleteProject();
+                        User.GetProjects();
+                    })
+                    .catch(err => console.log("[DeleteProject] error:", err))
             })
-            .catch(err => console.log("[DeleteProject] error:", err))
+        })
     }
 
     /**
@@ -173,8 +185,9 @@ class User {
      * @param {function()}callback
      */
     static CreateSceneObjects(scene, markerId, videoId, callback = null) {
-        let marker = { name: "" }
-        let video = { name: "" }
+        btnSaveProject.classList.remove('disabled');
+        let marker = {name: ""}
+        let video = {name: ""}
         MixarWebBackendAPI.getAsset(markerId)
             .then(asset => {
                 marker = asset
@@ -235,8 +248,8 @@ class User {
      * @constructor
      */
     static ReplaceSceneObject(scene, index, markerId, videoId, callback) {
-        let marker = { name: "" }
-        let video = { name: "" }
+        let marker = {name: ""}
+        let video = {name: ""}
         MixarWebBackendAPI.getAsset(markerId)
             .then(asset => {
                 marker = asset
@@ -252,7 +265,6 @@ class User {
                                 if (callback != null) callback()
                             })
                         })
-
 
                     })
                     .catch(err => {
@@ -283,31 +295,43 @@ class User {
             })
     }
 
-
     static baseURL = "https://dummy.org"
     static qrcode = null
 
-    /**
+        /**
      *
      * @param {number}id
      * @param {HTMLElement}element
      * @param {function("data:image/png;base64,")}callback
+     * @param dotsType
      */
-    static GenerateQR(id, element, callback) {
-        if (this.qrcode == null) {
-            this.qrcode = new QRCode(element.id, {
-                text: "dummytext",
-                width: 256,
-                height: 256,
-                colorDark: "#000000",
-                colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.H
-            })
+        static GenerateQR(id, element, callback, dotsType = 4) {
+            const dotsTypes = ['rounded', 'dots', 'classy', 'classy-rounded', 'square', 'extra-rounded']
+            let text = `${this.baseURL}?id=${id}`
+            const qrCode = new QRCodeStyling({
+                width: 512,
+                height: 512,
+                type: "svg",
+                data: text,
+                image: "https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg",
+                dotsOptions: {
+                    color: "#000", // dots color
+                    type: dotsTypes[dotsType],
+                },
+                backgroundOptions: {
+                    color: "#e9ebee",
+                },
+                imageOptions: {
+                    crossOrigin: "anonymous",
+                    margin: 20
+                },
+                cornersSquareOptions: {
+                    type: 'extra-rounded',  //'dot' 'square' 'extra-rounded'
+                }
+            });
+            qrCode.download({name: `qr_#${id}`, extension: "png"});
         }
-        this.qrcode.clear()
-        this.qrcode.makeCode(`${this.baseURL}?id=${id}`)
-        setTimeout(() => callback(element.children[1].src), 1000)
-    }
+    
 
     static GetCurrentUser(callback) {
         MixarWebBackendAPI.getCurrentUser()
@@ -319,6 +343,7 @@ class User {
                 callback(null)
             })
     }
+
     /**
      *
      * @param {number}id
@@ -334,8 +359,8 @@ class User {
     static calcAspect(info, info2) {
         let iaspect = info.width / info.height
         let vvaspect = info2.width / info2.height
-        let hnorm = { width: 1.0, height: info2.height / info2.width }
-        let vnorm = { width: info2.width / info2.height, height: 1.0 }
+        let hnorm = {width: 1.0, height: info2.height / info2.width}
+        let vnorm = {width: info2.width / info2.height, height: 1.0}
 
         if (iaspect > 1) {
             if (vvaspect > 1) {
@@ -361,7 +386,6 @@ class User {
      * @param {function()}callback
      */
     static SetVideoAspect(scene, index, callback = null) {
-
         let imageid = scene.content[index].image.id
         let videoid = scene.content[index].video.id
         this.GetMediaInfo(imageid, info => {
@@ -369,10 +393,18 @@ class User {
                 this.GetMediaInfo(videoid, info2 => {
                     if (info2 != null) {
                         let vaspect = this.calcAspect(info, info2)
+                        let iaspect = info.width / info.height
                         let video = scene.project.scenes[0].objects.filter(t => {
                             return t.video.contentId === videoid
                         })
-                        video[0].transform.scale = { x: vaspect.width, y: vaspect.height, z: 1 }
+                        if (vaspect.width > vaspect.height)
+                            video[0].transform.scale = {x: vaspect.width * 0.2, y: vaspect.height * 0.2, z: 1}
+                        else
+                            video[0].transform.scale = {
+                                x: vaspect.width * 0.2 / iaspect,
+                                y: vaspect.height * 0.2 / iaspect,
+                                z: 1
+                            }
                         if (callback != null) callback()
                     } else if (callback != null) callback()
                 })

@@ -1,20 +1,7 @@
-/*
-* Prefixed by https://autoprefixer.github.io
-* PostCSS: v8.4.14,
-* Autoprefixer: v10.4.7
-* Browsers: last 4 version
-*/
-
-/*
-* Prefixed by https://autoprefixer.github.io
-* PostCSS: v8.4.14,
-* Autoprefixer: v10.4.7
-* Browsers: last 4 version
-*/
 
 @font-face {
     font-family: 'Proxima Nova';
-    src: url('./fonts/Proxima_Nova_Regular.ttf');
+    src: url('./fonts/ProximaNova-Regular.woff2');
     font-weight: 400;
 }
 
@@ -54,7 +41,7 @@ a {
 }
 
 a:hover {
-    color: #177769;
+    color: #FFB236;
     
     -webkit-text-decoration-color: #FFB236;
     text-decoration-color: #FFB236;
@@ -89,11 +76,19 @@ a:hover {
     background: inherit;
     color: #000000;
 }
+.primary-btn_line {
+    padding: 0;
+    border: none;
+}
 .primary-btn:disabled {
     background-color: #00000011;
     border: 2px solid #ffb23648;
     color: #00000077;
     pointer-events: none;
+}
+.primary-btn_line:disabled {
+    background-color: #00000000;
+    border: 2px solid #ffb23600;
 }
 .btn-add-user.open-popup {
     background-color: #FFB236;
@@ -102,7 +97,10 @@ a:hover {
 .primary-btn:hover {
     background-color: #FFB236;
 }
-
+.primary-btn_line:hover {
+    background-color: #ffb23600;
+    color: #FFB236;
+}
 .btn-basket,
 .btn-delete,
 .btn-download {
@@ -218,8 +216,7 @@ input:hover {
 }
 
 .header__nav_link:hover {
-    -webkit-text-decoration-color: #ffb236;
-    text-decoration-color: #ffb236;
+    color: #ffb236;
 }
 
 .account_btn.open span {
@@ -227,9 +224,13 @@ input:hover {
     text-decoration: underline;
     -webkit-text-decoration-color: #ffb236;
     text-decoration-color: #ffb236;
+    line-height: 18px;
+    text-decoration-thickness: 15%;
     
 }
-
+.account_btn.open:hover span {
+    color: #177769;
+}
 /* .account_btn:hover .block_account {
     display: block;
 } */
@@ -244,6 +245,10 @@ input:hover {
     text-decoration-color: #ffb236;
     font-weight: 800;
     pointer-events: none;
+    text-decoration-thickness: 15%;
+    line-height: 18px;
+    
+
 }
 
 .header .container {
@@ -328,9 +333,11 @@ input:hover {
     box-shadow: 0px 14px 24px 0px #00000040;
     padding: 16px 22px 20px;
     margin: 0 auto;
-    font-size: 10px;
+    font-size: 16px;
 }
-
+.block_login  .primary-btn {
+    margin: 0 auto;
+}
 .container_login {
     margin-top: 15vh;
 }
@@ -380,11 +387,11 @@ input:hover {
 
 .project-table {
     width: 100%;
-    max-width: 768px;
+    max-width: 1080px;
     margin-top: 25px;
 
     border-collapse: separate;
-    border-spacing: 0 12px;
+    border-spacing: 2px 12px;
     margin-bottom: 20px;
     font-size: 14px;
     padding-right: 50px;
@@ -409,24 +416,7 @@ input:hover {
        text-overflow: ellipsis;
     position: relative;
 }
-.project-name-title_id {
-    opacity: 0.8;
-}
-.project-name-title:hover + .bubble-full-name{
-    opacity: 1;
-}
-.bubble-full-name {
-    position: absolute;
-    top: -10px;
-    pointer-events: none;
-    background-color: #65E0BD;
-    border-radius: 12px;
-    padding: 5px 10px;
-    opacity: 0;
-    color: #177769;
 
-    
-}
 .project-table__header {
     background: inherit;
 
@@ -708,7 +698,7 @@ td:first-child {
 .new-contracts-table {
     position: relative;
     width: 100%;
-    max-width: 690px;
+    max-width: 1080px;
     border-collapse: separate;
     border-spacing: 1px 12px;
     font-size: 14px;
@@ -720,7 +710,7 @@ td:first-child {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #65e0bd77;
+    background-color: #ffffff77;
     border-radius: 15px;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -795,6 +785,9 @@ td:first-child {
 
 .new-contracts-table-body .td_btn {
     background-color: inherit;
+}
+.new-contracts-table-body .td_btn * {
+    margin-left: 10px;
 }
 
 .files-item__btns {
@@ -921,6 +914,7 @@ td:first-child {
     justify-content: start;
     padding: 8.5px 0;
     gap: 4px;
+    margin-left: 10px;
 }
 
 .role_user,

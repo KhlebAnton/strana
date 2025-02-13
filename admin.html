@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Страна Знаний</title>
     <link rel="stylesheet" href="./style.css">
+    <script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
 </head>
 
 <body>
@@ -77,7 +78,7 @@
                             <input class="new-contracts__input" type="text" placeholder="Номер договора или проекта">
                             <button class="primary-btn btn-save-project"
                                 onclick="updateProject(true)">Сохранить</button>
-                            <button id="qrel-btn" class="primary-btn">Скачать QR-код</button>
+                            <button id="qrel-btn" class="primary-btn primary-btn_line">Скачать QR-код</button>
                         </div>
                         <div class="new-contracts__count-files">
                             Загружено: <span id="uploadingPhoto">0</span> фото
@@ -125,7 +126,7 @@
                             <thead class="user-table__header">
                                 <tr>
                                     <th>Имя</th>
-                                    <th>Email</th>
+                                    <th>Логин</th>
                                     <th>Роль</th>
                                 </tr>
                             </thead>
@@ -188,8 +189,8 @@
 
                     </label>
                     <label class="label-input" for="email">
-                        <p class="label-input__title">Email</p>
-                        <input type="email" id="email" name="email" required>
+                        <p class="label-input__title">Логин</p>
+                        <input type="text" id="email" name="email" required>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <mask id="mask0_82_1006" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
                                 width="24" height="24">
@@ -261,8 +262,8 @@
 
                     </label>
                     <label class="label-input" for="email">
-                        <p class="label-input__title">Email</p>
-                        <input type="email" id="input-add-email" name="email" placeholder="Email" required>
+                        <p class="label-input__title">Логин</p>
+                        <input type="text" id="input-add-email" name="email" placeholder="Логин" required>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <mask id="mask0_82_1006" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
                                 width="24" height="24">
@@ -339,6 +340,7 @@
     <script src="./usermethods.js"></script>
     <script src="./adminmethods.js"></script>
     <script src="./qrcode.js"></script>
+    
 
 
     <script src="./scripts/main.js"></script>

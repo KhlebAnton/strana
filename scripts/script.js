@@ -25,6 +25,7 @@ const newContractsPage = document.querySelector('.new-contracts-page');
 inputNewContract.addEventListener('change', () => {
     if (!newProjectOpen) {
         openProject.header.name = inputNewContract.value;
+        btnSaveProject.classList.remove('disabled');
     }
 
 })
@@ -75,7 +76,10 @@ function showNewContractsPage(res, newProject = true) {
     titleNewContract.textContent = `
     ${newProject === true ? 'Создание нового договора' : 'Изменение договора'}
     `;
-   
+    if(!newProject) {
+        btnSaveProject.classList.add('disabled');
+
+    } 
     newProjectOpen = false;
     qrelBtn.classList.remove('disabled');
     countPhotoNewCotract.classList.remove('disabled');
