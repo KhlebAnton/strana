@@ -326,11 +326,17 @@ class User {
                     margin: 20
                 },
                 cornersSquareOptions: {
+                    color: "#000",
                     type: 'extra-rounded',  //'dot' 'square' 'extra-rounded'
+                },
+                cornersDotOptions:{
+                    color: "#000",
+                    type: 'dot', // square, dot
                 }
             });
             qrCode.download({name: `qr_#${id}`, extension: "png"});
         }
+    
     
 
     static GetCurrentUser(callback) {
