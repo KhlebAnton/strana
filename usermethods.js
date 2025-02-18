@@ -234,7 +234,8 @@ class User {
      * @param {number}index
      */
     static DeleteSceneObject(scene, index) {
-        scene.removeContent(index)
+        scene.removeContent(index);
+        btnSaveProject.classList.remove('disabled');
 
     }
 
@@ -298,46 +299,83 @@ class User {
     static baseURL = "https://dummy.org"
     static qrcode = null
 
-        /**
+    /**
+     *
+     * @param {string} text
+     * @param {string} logourl
+     * @param {{dotsType: number, cornerDotType: number, width: number, cornerSquareType: number, height: number}}qrParam - {width: number, height: number, dotsType:[0..5], cornerSquareType: [0..2], cornerDotType: [0..1]}
+     * @param {{cornerSquare: string, dots: string, background: string, cornerDot: string}}qrColor - {dots: "#000", cornerSquare: "#000", cornerDot: "#000", background: "#e9ebee"}
+     * @returns {{image: string, data: string, width:number, height:number,
+     * dotsOptions: {color: string, type: string},
+     * cornersDotOptions: {color: string, type: string},
+     * backgroundOptions: {color: string}, data, width: number,
+     * cornersSquareOptions: {color: string, type: string}, type: string,
+     * imageOptions: {margin: number, crossOrigin: string}, height: number}}
+     */
+    static qrSettings(text,
+                      qrParam = {
+                          width: 512,
+                          height: 512,
+                          dotsType: 4,
+                          cornerSquareType: 2,
+                          cornerDotType: 1,
+                          logourl: "./sz_logo_qr.png",
+                      },
+                      qrColor = {dots: "#000", cornerSquare: "#000", cornerDot: "#000", background: "#e9ebee"}) {
+        const dotsTypes = ['rounded', 'dots', 'classy', 'classy-rounded', 'square', 'extra-rounded']
+        const cornerSquareTypes = ['dot', 'square', 'extra-rounded']
+        const cornerDotTypes = ['square', 'dot']
+        return {
+            width: qrParam.width,
+            height: qrParam.height,
+            type: "svg",
+            data: text,
+            image: qrParam.logourl,
+            dotsOptions: {
+                color: qrColor.dots,
+                type: dotsTypes[qrParam.dotsType],
+            },
+            backgroundOptions: {
+                color: qrColor.background,
+            },
+            imageOptions: {
+                crossOrigin: "anonymous",
+                margin: 20
+            },
+            cornersSquareOptions: {
+                color: qrColor.cornerSquare,
+                type: cornerSquareTypes[qrParam.cornerSquareType],
+            },
+            cornersDotOptions: {
+                color: qrColor.cornerDot,
+                type: cornerDotTypes[qrParam.cornerDotType],
+            }
+        }
+    }
+
+    /**
      *
      * @param {number}id
      * @param {HTMLElement}element
      * @param {function("data:image/png;base64,")}callback
-     * @param dotsType
+     * @param qrParam
+     * @param qrColor
      */
-        static GenerateQR(id, element, callback, dotsType = 4) {
-            const dotsTypes = ['rounded', 'dots', 'classy', 'classy-rounded', 'square', 'extra-rounded']
-            let text = `${this.baseURL}?id=${id}`
-            const qrCode = new QRCodeStyling({
-                width: 512,
-                height: 512,
-                type: "svg",
-                data: text,
-                image: "https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg",
-                dotsOptions: {
-                    color: "#000", // dots color
-                    type: dotsTypes[dotsType],
-                },
-                backgroundOptions: {
-                    color: "#e9ebee",
-                },
-                imageOptions: {
-                    crossOrigin: "anonymous",
-                    margin: 20
-                },
-                cornersSquareOptions: {
-                    color: "#000",
-                    type: 'extra-rounded',  //'dot' 'square' 'extra-rounded'
-                },
-                cornersDotOptions:{
-                    color: "#000",
-                    type: 'dot', // square, dot
-                }
-            });
-            qrCode.download({name: `qr_#${id}`, extension: "png"});
-        }
-    
-    
+    static GenerateQR(id, element, callback,
+                      qrParam = {
+                          width: 512,
+                          height: 512,
+                          dotsType: 4,
+                          cornerSquareType: 2,
+                          cornerDotType: 1,
+                          logourl: "./sz_logo_qr2.png"
+                      },
+                      qrColor = {dots: "#000", cornerSquare: "#000", cornerDot: "#000", background: "#e9ebee"}) {
+        let text = `${this.baseURL}?id=${id}`
+        const qrCode = new QRCodeStyling(this.qrSettings(text, qrParam, qrColor))
+        qrCode.download({name: `qr_#${id}`, extension: "png"});
+    }
+
 
     static GetCurrentUser(callback) {
         MixarWebBackendAPI.getCurrentUser()

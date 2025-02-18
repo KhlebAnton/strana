@@ -86,7 +86,9 @@ function setupSearchFilter(projects) {
     if (searchValue) {
       filteredProjectsData = projects.filter(project => {
         const nameMatch = project.name.toLowerCase().includes(searchValue);
-        return nameMatch;
+        const idMatch = project.id.toString().includes(searchValue);
+        
+        return nameMatch || idMatch;
       });
     } else {
       filteredProjectsData = projects;
