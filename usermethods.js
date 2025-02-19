@@ -370,7 +370,7 @@ class User {
                           cornerDotType: 1,
                           logourl: "./sz_logo_qr2.png"
                       },
-                      qrColor = {dots: "#000", cornerSquare: "#000", cornerDot: "#000", background: "#e9ebee"}) {
+                      qrColor = {dots: "#000", cornerSquare: "#000", cornerDot: "#000", background: "#ffffff"}) {
         let text = `${this.baseURL}?id=${id}`
         const qrCode = new QRCodeStyling(this.qrSettings(text, qrParam, qrColor))
         qrCode.download({name: `qr_#${id}`, extension: "png"});

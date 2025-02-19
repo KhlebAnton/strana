@@ -826,7 +826,7 @@ td:first-child {
 /* users */
 .user-table {
     width: 100%;
-    max-width: 718px;
+    max-width: 1080px;
     margin-top: 25px;
 
     border-collapse: separate;

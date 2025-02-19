@@ -142,7 +142,7 @@ function updateDisplayUser(user) {
 // users render
 const userTableBody = document.getElementById('userTableBody');
 
-const itemsUserPage = 4;
+const itemsUserPage = 20;
 let currentPageUser = 1;
 
 function renderUsers(users, page, itemsPerPage) {
