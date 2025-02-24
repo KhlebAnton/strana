@@ -303,6 +303,7 @@ function createFileRow(dataArray) {
     imageWrapper.className = 'file-input-wrapper photo-wrapper';
 
     if (image.id === -1) {
+      imageCell.classList.add('empty-input');
       imageWrapper.innerHTML = `
         <input type="file" data-scene-id="${index}" class="file-input photo-input" accept=".jpg,.jpeg,.png" style="display:none;">
         <span class="files-item__name">Выберите фото (JPEG или PNG)</span>
@@ -312,6 +313,7 @@ function createFileRow(dataArray) {
         </div>
       `;
     } else {
+      
       imageWrapper.innerHTML = `
         <span class="files-item__name" data-scene-id="${index}" data-id="${image.id}" data-url="${image.url}">${image.name}</span>
         <div class="files-item__btns" style="display: flex;">
@@ -330,6 +332,7 @@ function createFileRow(dataArray) {
     videoWrapper.className = 'file-input-wrapper video-wrapper';
 
     if (video.id === -1) {
+      videoCell.classList.add('empty-input');
       videoWrapper.innerHTML = `
         <input type="file" data-scene-id="${index}" class="file-input video-input" accept=".mp4" style="display:none;">
         <span class="files-item__name">Выберите видео (MP4)</span>
